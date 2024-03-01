@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Payment Information</h1>
+
+    <form id="payment-form" th:action="@{/checkout}" method="post">
+        <div class="form-group">
+            <label for="amount">Amount:</label>
+            <input id="amount" name="amount" readonly class="form-control col-4 mb-2" th:value="${paymentInfo.amount}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" name="email" readonly class="form-control col-4 mb-2" th:value="${paymentInfo.email}">
+        </div>
+
+        <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input id="productName" name="productName" readonly class="form-control col-4 mb-2" th:value="${paymentInfo.productName}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Proceed with Payment</button>
+    </form>
+</div>
+</body>
+</html>

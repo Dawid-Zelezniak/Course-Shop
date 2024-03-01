@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div th:if="${course}">
+        <h3>Course Details:</h3>
+        <p><strong>Course title:</strong> <span th:text="${course.title}"></span></p>
+        <hr>
+        <p><strong>Description:</strong> <span th:text="${course.description}"></span></p>
+        <hr>
+        <p><strong>Author:</strong> <span th:text="${course.courseAuthor.getFullName()}"></span></p>
+        <hr>
+        <p><strong>Created At:</strong> <span th:text="${#temporals.format(course.dateCreated, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+        <hr>
+        <p><strong>Category:</strong> <span th:text="${course.category}"></span></p>
+        <hr>
+        <p><strong>Participants number:</strong> <span th:text="${participants}"></span></p>
+    </div>
+
+
+    <a th:href="@{/courses}" class="btn btn-primary">Back</a>
+</div>
+
+</body>
+</html>
