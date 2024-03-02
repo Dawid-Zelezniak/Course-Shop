@@ -40,6 +40,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
                                                    AuthenticationSuccessHandler successHandler) throws Exception {
+        httpSecurity.csrf().disable();
         httpSecurity.authorizeRequests((configurer) -> {
                     configurer
                             .requestMatchers("/courses").hasRole("STUDENT")

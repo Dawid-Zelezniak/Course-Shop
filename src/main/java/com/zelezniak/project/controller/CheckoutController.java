@@ -3,10 +3,12 @@ package com.zelezniak.project.controller;
 import com.zelezniak.project.dto.PaymentInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @Controller
@@ -21,10 +23,18 @@ public class CheckoutController {
         model.addAttribute("amount", paymentInfo.getAmount());
         model.addAttribute("email", paymentInfo.getEmail());
         model.addAttribute("productName", paymentInfo.getProductName());
-        log.info(paymentInfo.getEmail());
-        log.info(paymentInfo.getProductName());
-        log.info("" + paymentInfo.getAmount());
-        //dane są poprawnie przekazywane do formularza a następnie do pliku checkout.js
         return "checkout-form";
     }
+
+
+    @GetMapping("/success/payment")
+    public ResponseEntity<String> handleSuccessPayment(
+            Principal principal,
+            @RequestParam String productName) {
+        String email = principal.getName();
+
+        return ResponseEntity.ok("Payment success! Email: " + email + ", Product: " + productName);
+    }
+
+
 }

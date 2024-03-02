@@ -8,14 +8,7 @@ const request = {
     productName: productName
 }
 
-
 let elements;
-
-//wszystko wyswietla sie w konsoli czyli dane są tu dostarczone
-console.log('Stripe Public Key:', publicKey);
-console.log('Product Name:', productName);
-console.log('Amount:',amount);
-console.log('Email:', email);
 
 initialize();
 checkStatus();
@@ -43,7 +36,10 @@ async function initialize() {
     const appearance = {
         theme: 'stripe',
     };
-    elements = stripe.elements({ appearance, clientSecret });
+    elements = stripe.elements({
+        clientSecret: clientSecret,
+        appearance: appearance
+    });
 
     const linkAuthenticationElement = elements.create("linkAuthentication");
     linkAuthenticationElement.mount("#link-authentication-element");
@@ -74,25 +70,20 @@ async function handleSubmit(e) {
     const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-            // Make sure to change this to your payment completion page
+            // Przekierowanie na stronę po udanej płatności
             return_url: "https://dashboard.stripe.com/test/payments/"+paymentIntentID,
+            // return_url: "/success/payment?productName=" + encodeURIComponent(productName),
             receipt_email: emailAddress
         },
     });
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
+    if (error) {
         showMessage(error.message);
-    } else {
-        showMessage("An unexpected error occurred.");
     }
 
     setLoading(false);
 }
+
 
 // Fetches the payment intent status after payment submission
 async function checkStatus() {
