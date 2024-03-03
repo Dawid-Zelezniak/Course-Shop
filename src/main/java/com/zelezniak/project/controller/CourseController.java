@@ -8,10 +8,7 @@ import com.zelezniak.project.entity.Order;
 import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
-import com.zelezniak.project.service.AuthorService;
-import com.zelezniak.project.service.CourseService;
-import com.zelezniak.project.service.CheckoutService;
-import com.zelezniak.project.service.StudentService;
+import com.zelezniak.project.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -139,6 +136,8 @@ public class CourseController {
         CourseAuthor author = authorService.findByEmail(email);
         Student student = studentService.findByEmail(email);
         Set<Order> orders = author != null ? author.getAuthorOrders() : student.getStudentOrders();
+        double totalPrice = OrderService.totalOrdersPrice(orders);
+        modelAndView.addObject("totalPrice", totalPrice);
         modelAndView.addObject("orders", orders);
         return modelAndView;
     }

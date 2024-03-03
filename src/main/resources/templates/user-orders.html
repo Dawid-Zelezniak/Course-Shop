@@ -85,6 +85,13 @@
             <td th:text="${order.orderedCourse.title}"></td>
         </tr>
         </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3" style="text-align: left;">
+                Total price: <span th:text="${totalPrice}"></span> $
+            </td>
+        </tr>
+        </tfoot>
     </table>
     <a th:href="@{/courses}" class="btn btn-info">Back</a>
 </div>
