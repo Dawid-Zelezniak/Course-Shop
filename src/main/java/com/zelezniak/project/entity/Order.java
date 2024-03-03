@@ -48,19 +48,15 @@ public class Order {
 
     public void addUser(Student student) {
         if (student != null) {
-            if (this.students == null) {
-                this.students = new HashSet<>();
-            }
-            this.students.add(student);
+            if (students == null) {students = new HashSet<>();}
+            students.add(student);
         }
     }
 
     public void addUser(CourseAuthor courseAuthor) {
         if (courseAuthor != null) {
-            if (this.courseAuthors == null) {
-                this.courseAuthors = new HashSet<>();
-            }
-            this.courseAuthors.add(courseAuthor);
+            if (courseAuthors == null) {courseAuthors = new HashSet<>();}
+            courseAuthors.add(courseAuthor);
         }
     }
 }

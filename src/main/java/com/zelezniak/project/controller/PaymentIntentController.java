@@ -31,13 +31,9 @@ public class PaymentIntentController {
                                         .builder()
                                         .setEnabled(true)
                                         .build()
-                        )
-                        .build();
+                        ).build();
 
-        PaymentIntent intent =
-                PaymentIntent.create(params);
-    log.info("SECREEEET AAAAAAAAAAAAAAAAAAAAAAA                     "+intent.getClientSecret());
-        return new Response(intent.getId(),
-                intent.getClientSecret());
+        PaymentIntent intent = PaymentIntent.create(params);
+        return new Response(intent.getId(), intent.getClientSecret());
     }
 }

@@ -1,20 +1,7 @@
 package com.zelezniak.project.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -24,6 +11,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "students")
 public class Student {
 
@@ -61,22 +50,15 @@ public class Student {
 
     public void addOrder(Order order) {
         if (order != null) {
-            if (this.studentOrders == null) {
-                this.studentOrders = new HashSet<>();
-            }
-            this.studentOrders.add(order);
+            if (studentOrders == null) {studentOrders = new HashSet<>();}
+            studentOrders.add(order);
         }
-
     }
 
     public void addBoughtCourse(Course course) {
         if (course != null) {
-            if (this.boughtCourses == null) {
-                this.boughtCourses = new HashSet<>();
-            }
-            this.boughtCourses.add(course);
+            if (boughtCourses == null) {boughtCourses = new HashSet<>();}
+            boughtCourses.add(course);
         }
     }
-
-
 }

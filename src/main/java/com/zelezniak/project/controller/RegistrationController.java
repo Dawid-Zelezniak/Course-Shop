@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 @RequiredArgsConstructor
 public class RegistrationController {
+
     private final UserService userService;
 
     @GetMapping({"/registration"})
@@ -31,15 +32,14 @@ public class RegistrationController {
     public ModelAndView processRegistrationForm(@Valid @ModelAttribute("webUser") UserData user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("register/registration-form");
         ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
-        if (errors != null) {
-            return errors;
-        } else {
+        if (errors != null) {return errors;} else {
             try {
                 this.userService.createNewUser(user);
                 modelAndView.addObject("info", "User created successfully");
                 return modelAndView;
             } catch (CourseException var6) {
-                return modelAndView.addObject("errorInfo", new ErrorInfo(var6.getCourseError().getMessage()));
+                return modelAndView.addObject(
+                        "errorInfo", new ErrorInfo(var6.getCourseError().getMessage()));
             }
         }
     }

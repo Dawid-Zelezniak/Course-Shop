@@ -4,6 +4,7 @@ package com.zelezniak.project.controller;
 import com.zelezniak.project.dto.PaymentInfo;
 import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
+import com.zelezniak.project.entity.Order;
 import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
@@ -35,28 +36,28 @@ public class CourseController {
     private final CheckoutService checkoutService;
     private final StudentService studentService;
 
-    @GetMapping({"/courses"})
+    @GetMapping("/courses")
     public ModelAndView availableCourses(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("courses");
-        List<Course> courses = this.courseService.getAllAvailableCourses(principal.getName());
+        List<Course> courses = courseService.getAllAvailableCourses(principal.getName());
         modelAndView.addObject("courses", courses);
         return modelAndView;
     }
 
-    @GetMapping({"/courses/payment/info"})
+    @GetMapping("/courses/payment/info")
     public ModelAndView prepareOrder(@RequestParam Long courseId, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("payment-information");
-        Course courseToBuy = this.courseService.getById(courseId);
-        PaymentInfo paymentInfo = this.checkoutService.createPaymentInfo(courseToBuy, principal.getName());
+        Course courseToBuy = courseService.findById(courseId);
+        PaymentInfo paymentInfo = checkoutService.createPaymentInfo(courseToBuy, principal.getName());
         modelAndView.addObject("paymentInfo", paymentInfo);
         return modelAndView;
     }
 
-    @GetMapping({"/add/courses/form"})
+    @GetMapping("/add/courses/form")
     public ModelAndView addCourseForm(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("add-courses-form");
         String email = principal.getName();
-        CourseAuthor authorFromDb = this.authorService.findByEmail(email);
+        CourseAuthor authorFromDb = authorService.findByEmail(email);
         modelAndView.addObject("authorId", authorFromDb.getAuthorId());
         modelAndView.addObject("course", new Course());
         return modelAndView;
@@ -66,77 +67,79 @@ public class CourseController {
     public ModelAndView saveCourse(@ModelAttribute("course") @Valid Course course, @RequestParam Long authorId, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("add-courses-form");
         ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
-        if (errors != null) {
-            return errors;
-        } else {
+        if (errors != null) {return errors;}
+        else {
             try {
-                this.courseService.addCourse(course, authorId);
+                courseService.addCourse(course, authorId);
                 modelAndView.addObject("info", "New course has been created!");
                 return modelAndView;
             } catch (CourseException ex) {
-                return modelAndView.addObject("errorInfo", new ErrorInfo(ex.getCourseError().getMessage()));
-            }
+                return modelAndView.addObject(
+                        "errorInfo", new ErrorInfo(ex.getCourseError().getMessage()));}
         }
     }
 
-    @GetMapping({"/courses/details"})
+    @GetMapping("/courses/details")
     public ModelAndView courseDetails(@RequestParam Long courseId) {
         ModelAndView modelAndView = new ModelAndView("course-details");
-        Course course = this.courseService.getById(courseId);
+        Course course = courseService.findById(courseId);
         int participantsNumber = course.countTotalParticipants();
         modelAndView.addObject("course", course);
         modelAndView.addObject("participants", participantsNumber);
         return modelAndView;
     }
 
-    @GetMapping({"/author/courses"})
+    @GetMapping("/author/courses")
     public ModelAndView coursesCreatedByAuthor(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("courses-created-by-author");
         String authorEmail = principal.getName();
-        Set<Course> createdByAuthor = this.authorService.findByEmail(authorEmail).getCreatedByAuthor();
+        Set<Course> createdByAuthor = authorService.findByEmail(authorEmail).getCreatedByAuthor();
         modelAndView.addObject("courses", createdByAuthor);
         return modelAndView;
     }
 
-    @GetMapping({"/update/courses"})
+    @GetMapping("/update/courses")
     public ModelAndView courseUpdateForm(@RequestParam Long courseId) {
         ModelAndView modelAndView = new ModelAndView("update-course");
-        Course course = this.courseService.getById(courseId);
+        Course course = courseService.findById(courseId);
         modelAndView.addObject("course", course);
         return modelAndView;
     }
 
-    @PostMapping({"/update/courses/"})
+    @PostMapping("/update/courses/")
     public ModelAndView updateCourse(@RequestParam Long courseId, @ModelAttribute("course") @Valid Course course, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("update-course");
         ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
-        if (errors != null) {
-            return errors;
-        } else {
+        if (errors != null) {return errors;}
+        else {
             try {
-                this.courseService.updateCourse(courseId, course);
+                courseService.updateCourse(courseId, course);
                 modelAndView.addObject("info", "course updated successfully");
             } catch (CourseException var7) {
                 modelAndView.addObject("errorInfo", new ErrorInfo(var7.getCourseError().getMessage()));
-            }
-            return modelAndView;
+            }return modelAndView;
         }
     }
 
-
-    @GetMapping({"/purchased/courses"})
+    @GetMapping("/purchased/courses")
     public ModelAndView coursesBoughtByUser(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("user-courses");
         String email = principal.getName();
         CourseAuthor author = authorService.findByEmail(email);
-        Set<Course> userCourses;
-        if (author != null) {
-            userCourses = author.getBoughtCourses();
-        } else {
-            Student student = studentService.findByEmail(email);
-            userCourses = student.getBoughtCourses();
-        }
+        Student student = studentService.findByEmail(email);
+        Set<Course> userCourses = author != null ? author.getBoughtCourses() : student.getBoughtCourses();
         modelAndView.addObject("courses", userCourses);
+        return modelAndView;
+    }
+
+    @GetMapping({"/user/orders"})
+    public ModelAndView userOrders(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("user-orders");
+        String email = principal.getName();
+        CourseAuthor author = authorService.findByEmail(email);
+        Student student = studentService.findByEmail(email);
+        Set<Order> orders = author != null ? author.getAuthorOrders() : student.getStudentOrders();
+        modelAndView.addObject("orders", orders);
         return modelAndView;
     }
 }

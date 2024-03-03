@@ -21,19 +21,17 @@ public class CheckoutController {
 
     private final CourseService courseService;
 
-
     @Value("${stripe.api.publicKey}")
     private String publicKey;
 
     @PostMapping({"/checkout"})
     public String showCard(@ModelAttribute PaymentInfo paymentInfo, Model model) {
-        model.addAttribute("publicKey", this.publicKey);
+        model.addAttribute("publicKey", publicKey);
         model.addAttribute("amount", paymentInfo.getAmount());
         model.addAttribute("email", paymentInfo.getEmail());
         model.addAttribute("productName", paymentInfo.getProductName());
         return "checkout-form";
     }
-
 
     @GetMapping("/success/payment")
     public String handleSuccessPayment(Principal principal, @RequestParam String productName) {

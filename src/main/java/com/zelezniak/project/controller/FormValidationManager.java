@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 public class FormValidationManager {
+
     public static ModelAndView getErrors(BindingResult bindingResult, ModelAndView modelAndView) {
         if (bindingResult.hasErrors()) {
             List<ErrorInfo> errorInfos =
@@ -18,8 +19,6 @@ public class FormValidationManager {
                             .map(ErrorInfo::new)
                             .collect(Collectors.toList());
             return modelAndView.addObject("errorInfo", errorInfos);
-        } else {
-            return null;
-        }
+        } else {return null;}
     }
 }

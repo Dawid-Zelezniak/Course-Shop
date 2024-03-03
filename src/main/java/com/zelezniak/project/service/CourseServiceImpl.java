@@ -33,7 +33,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional
     public void addCourse(Course course, Long authorId) {
-
         if (course != null) {
             checkIfCourseExists(course);
             CourseAuthor authorFromDb = getAuthorById(authorId);
@@ -44,18 +43,18 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
-    public Course getById(Long courseId) {
+    public Course findById(Long courseId) {
         return courseRepository.findById(courseId).orElseThrow(() ->
                 new CourseException(CustomErrors.COURSE_NOT_FOUND));
     }
 
     @Transactional
     public void updateCourse(Long courseId, Course course) {
-        Course courseFromDb = getById(courseId);
+        Course courseFromDb = findById(courseId);
         //check if course exists in database
         if (!courseFromDb.getTitle().equals(course.getTitle()) && courseRepository.existsByTitle(course.getTitle())) {
-            throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);
-        } else {
+            throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);}
+        else {
             setCourse(courseFromDb, course);
             courseRepository.save(courseFromDb);
         }
@@ -64,27 +63,21 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getAllAvailableCourses(String userEmail) {
         List<Course> coursesFromDb = courseRepository.findAll();
         CourseAuthor courseAuthor = authorRepository.findByEmail(userEmail);
-        if (courseAuthor != null) {
-            return coursesAvailableForAuthor(coursesFromDb, courseAuthor);
-        } else {
-            Student student = studentRepository.findByEmail(userEmail);
-            return coursesAvailableForStudent(coursesFromDb, student);
-        }
+        Student student = studentRepository.findByEmail(userEmail);
+        return courseAuthor != null ?
+                coursesAvailableForAuthor(coursesFromDb, courseAuthor) :
+                coursesAvailableForStudent(coursesFromDb, student);
     }
 
     @Override
     @Transactional
     public void addBoughtCourseAndOrderForUser(String email, String productName) {
         CourseAuthor author = authorRepository.findByEmail(email);
+        Student student = studentRepository.findByEmail(email);
         Course course = courseRepository.findByTitle(productName)
                 .orElseThrow(() -> new CourseException(CustomErrors.COURSE_NOT_FOUND));
-
-        if (author != null) {
-            addCourseAndOrder(course, author);
-        } else {
-            Student student = studentRepository.findByEmail(email);
-            addCourseAndOrder(course, student);
-        }
+        if (author != null) {addCourseAndOrder(course, author);}
+        else {addCourseAndOrder(course, student);}
     }
 
     private void addCourseAndOrder(Course course, CourseAuthor author) {

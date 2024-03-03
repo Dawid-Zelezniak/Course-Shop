@@ -55,15 +55,15 @@ public class SecurityConfig {
                             .requestMatchers("/registration/**").permitAll()
                             .anyRequest().authenticated();
                 })
-                .formLogin(form -> {
+                .formLogin(form ->
                     form
                             .loginPage("/login/page")
                             .loginProcessingUrl("/login/processing")
                             .defaultSuccessUrl("/courses")
                             .successHandler(successHandler)
                             .usernameParameter("email")
-                            .permitAll();
-                })
+                            .permitAll()
+                )
                 .logout(LogoutConfigurer::permitAll)
                 .exceptionHandling((configurer) -> {
                     configurer.accessDeniedPage("/access-denied");

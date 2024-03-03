@@ -10,6 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CourseException.class)
     public ResponseEntity<ErrorInfo> courseExceptionHandler(CourseException exception) {
+
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
         switch (exception.getCourseError()) {
             case COURSE_NOT_FOUND,

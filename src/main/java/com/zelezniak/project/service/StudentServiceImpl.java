@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
+
     private final StudentRepository studentRepository;
 
     public List<Student> getAllStudents() {
         return this.studentRepository.findAll();
     }
-
 
     public Student findByEmail(String email) {
         return studentRepository.findByEmail(email);

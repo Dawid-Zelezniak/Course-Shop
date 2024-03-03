@@ -64,10 +64,10 @@ public class Course {
 
     public void addUserToCourse(Student student) {
         if (student != null) {
-            if (this.enrolledStudents == null) {
-                this.enrolledStudents = new HashSet<>();
+            if (enrolledStudents == null) {
+                enrolledStudents = new HashSet<>();
             }
-            this.enrolledStudents.add(student);
+            enrolledStudents.add(student);
         }
     }
 
@@ -77,21 +77,18 @@ public class Course {
 
     public void addUserToCourse(CourseAuthor courseAuthor) {
         if (courseAuthor != null) {
-            if (this.enrolledAuthors == null) {
-                this.enrolledAuthors = new HashSet<>();
+            if (enrolledAuthors == null) {
+                enrolledAuthors = new HashSet<>();
             }
-
-            this.enrolledAuthors.add(courseAuthor);
+            enrolledAuthors.add(courseAuthor);
         }
     }
 
     public void addOrder(Order order) {
         if (order != null) {
-            if (this.orders == null) {
-                this.orders = new HashSet<>();
-            }
-            this.orders.add(order);
-            order.setOrderedCourse(this); // Ustawia kurs dla zamówienia
+            if (orders == null) {orders = new HashSet<>();}
+            orders.add(order);
+            order.setOrderedCourse(this);
         }
     }
 
@@ -101,9 +98,8 @@ public class Course {
     }
 
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (o != null && this.getClass() == o.getClass()) {
+        if (this == o) {return true;}
+        else if (o != null && this.getClass() == o.getClass()) {
             Course course = (Course) o;
             return Double.compare(course.price, this.price) == 0 &&
                     Objects.equals(this.courseId, course.courseId) &&
@@ -112,9 +108,7 @@ public class Course {
                     Objects.equals(this.courseAuthor, course.courseAuthor) &&
                     Objects.equals(this.category, course.category) &&
                     Objects.equals(this.dateCreated, course.dateCreated);
-        } else {
-            return false;
-        }
+        } else {return false;}
     }
 
     public int hashCode() {

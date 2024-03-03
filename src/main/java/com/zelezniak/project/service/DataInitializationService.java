@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 final class DataInitializationService {
+
     private final RoleRepository roleRepository;
     private final CourseAuthorRepository authorRepository;
     private final BCryptPasswordEncoder encoder;
@@ -41,14 +42,12 @@ final class DataInitializationService {
             CourseAuthor admin = new CourseAuthor();
             admin.setEmail("admin@gmail.com");
             admin.setPassword(this.encoder.encode("admin123"));
-            Set<Role> roles = new HashSet();
+            Set<Role> roles = new HashSet<>();
             roles.add(roleStudent);
             roles.add(roleTeacher);
             roles.add(roleAdmin);
             admin.setRoles(roles);
             this.authorRepository.save(admin);
         }
-
     }
-
 }

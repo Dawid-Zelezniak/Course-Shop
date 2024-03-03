@@ -19,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(Course course, CourseAuthor author) {
         Order order = Order.builder()
-                .orderId(generateTrackingNumber())
+                .orderId(generateOrderId())
                 .totalPrice(course.getPrice())
                 .orderedCourse(course)
                 .build();
@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(Course course, Student student) {
         Order order = Order.builder()
-                .orderId(generateTrackingNumber())
+                .orderId(generateOrderId())
                 .totalPrice(course.getPrice())
                 .orderedCourse(course)
                 .build();
@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    private String generateTrackingNumber() {
+    private String generateOrderId() {
         return UUID.randomUUID().toString();
     }
 }

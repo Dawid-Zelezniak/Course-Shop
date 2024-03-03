@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CustomErrors {
+
     COURSE_NOT_FOUND("Course not found!"),
     COURSE_ALREADY_EXISTS("Such course already exists!"),
     USER_ALREADY_EXISTS("User with such email already exists!"),
@@ -13,6 +14,5 @@ public enum CustomErrors {
     USER_NOT_FOUND("Such user does not exists!");
 
     private final String message;
-
 }
     

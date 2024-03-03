@@ -1,9 +1,7 @@
 package com.zelezniak.project.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -14,8 +12,11 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Table(name = "course_authors")
 public class CourseAuthor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id")
@@ -34,7 +35,7 @@ public class CourseAuthor {
     private String password;
 
     @Column(name = "date_created")
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    private LocalDateTime dateCreated;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "created_by_author",
@@ -56,35 +57,22 @@ public class CourseAuthor {
 
     public void addAuthorCourse(Course course) {
         if (course != null) {
-            if (this.createdByAuthor == null) {
-                this.createdByAuthor = new HashSet<>();
-            }
-            this.createdByAuthor.add(course);
+            if (createdByAuthor == null) {createdByAuthor = new HashSet<>();}
+            createdByAuthor.add(course);
         }
     }
 
     public void addBoughtCourse(Course course) {
         if (course != null) {
-            if (this.boughtCourses == null) {
-                this.boughtCourses = new HashSet<>();
-            }
-            this.boughtCourses.add(course);
+            if (boughtCourses == null) {boughtCourses = new HashSet<>();}
+            boughtCourses.add(course);
         }
     }
 
     public void addOrder(Order order) {
         if (order != null) {
-            if (this.authorOrders == null) {
-                this.authorOrders = new HashSet<>();
-            }
-
-            this.authorOrders.add(order);
-        }
-    }
-
-    public void removeCourseFromCreatedByAuthor(Long courseId) {
-        if (this.createdByAuthor != null) {
-            this.createdByAuthor.removeIf((course) -> course.getCourseId().equals(courseId));
+            if (authorOrders == null) {authorOrders = new HashSet<>();}
+            authorOrders.add(order);
         }
     }
 
@@ -102,9 +90,7 @@ public class CourseAuthor {
                     Objects.equals(this.lastName, that.lastName) &&
                     Objects.equals(this.email, that.email) &&
                     Objects.equals(this.dateCreated, that.dateCreated);
-        } else {
-            return false;
-        }
+        } else {return false;}
     }
 
     public int hashCode() {
@@ -112,4 +98,5 @@ public class CourseAuthor {
                 this.lastName, this.email, this.dateCreated);
     }
 
+    {dateCreated = LocalDateTime.now();}
 }
