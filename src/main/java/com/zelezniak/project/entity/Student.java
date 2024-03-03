@@ -50,10 +50,7 @@ public class Student {
     @ManyToMany(mappedBy = "enrolledStudents")
     private Set<Course> boughtCourses;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "students_orders",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
+    @ManyToMany(mappedBy = "students")
     private Set<Order> studentOrders;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -65,7 +62,7 @@ public class Student {
     public void addOrder(Order order) {
         if (order != null) {
             if (this.studentOrders == null) {
-                this.studentOrders = new HashSet();
+                this.studentOrders = new HashSet<>();
             }
             this.studentOrders.add(order);
         }
@@ -75,9 +72,8 @@ public class Student {
     public void addBoughtCourse(Course course) {
         if (course != null) {
             if (this.boughtCourses == null) {
-                this.boughtCourses = new HashSet();
+                this.boughtCourses = new HashSet<>();
             }
-
             this.boughtCourses.add(course);
         }
     }

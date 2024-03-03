@@ -25,10 +25,12 @@
         <p><strong>Category:</strong> <span th:text="${course.category}"></span></p>
         <hr>
         <p><strong>Participants number:</strong> <span th:text="${participants}"></span></p>
+        <hr>
+        <p><strong>Price $:</strong> <span th:text="${course.price}"></span></p>
     </div>
 
 
-    <a th:href="@{/courses}" class="btn btn-primary">Back</a>
+    <a th:href="@{/courses}" class="btn btn-primary">Back to courses</a>
 </div>
 
 </body>

@@ -4,11 +4,13 @@ package com.zelezniak.project.controller;
 import com.zelezniak.project.dto.PaymentInfo;
 import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
+import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
 import com.zelezniak.project.service.AuthorService;
 import com.zelezniak.project.service.CourseService;
 import com.zelezniak.project.service.CheckoutService;
+import com.zelezniak.project.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class CourseController {
     private final CourseService courseService;
     private final AuthorService authorService;
     private final CheckoutService checkoutService;
+    private final StudentService studentService;
 
     @GetMapping({"/courses"})
     public ModelAndView availableCourses(Principal principal) {
@@ -86,14 +89,6 @@ public class CourseController {
         return modelAndView;
     }
 
-    @GetMapping({"/delete/courses"})
-    public String deleteCourse(@RequestParam Long courseId, Principal principal) {
-        String email = principal.getName();
-        CourseAuthor authorFromDb = this.authorService.findByEmail(email);
-        this.courseService.deleteCourse(courseId, authorFromDb);
-        return "redirect:/courses";
-    }
-
     @GetMapping({"/author/courses"})
     public ModelAndView coursesCreatedByAuthor(Principal principal) {
         ModelAndView modelAndView = new ModelAndView("courses-created-by-author");
@@ -126,5 +121,22 @@ public class CourseController {
             }
             return modelAndView;
         }
+    }
+
+
+    @GetMapping({"/purchased/courses"})
+    public ModelAndView coursesBoughtByUser(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView("user-courses");
+        String email = principal.getName();
+        CourseAuthor author = authorService.findByEmail(email);
+        Set<Course> userCourses;
+        if (author != null) {
+            userCourses = author.getBoughtCourses();
+        } else {
+            Student student = studentService.findByEmail(email);
+            userCourses = student.getBoughtCourses();
+        }
+        modelAndView.addObject("courses", userCourses);
+        return modelAndView;
     }
 }

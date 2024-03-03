@@ -2,50 +2,65 @@
 
 package com.zelezniak.project.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "orders")
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Long orderId;
+    private String orderId;
 
     @Column(name = "total_price")
     private Double totalPrice;
 
     @Column(name = "date_created")
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course orderedCourse;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @ManyToMany
+    @JoinTable(name = "students_orders",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private Set<Student> students;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private CourseAuthor courseAuthor;
+    @ManyToMany
+    @JoinTable(name = "authors_orders",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<CourseAuthor> courseAuthors;
 
+    public void addUser(Student student) {
+        if (student != null) {
+            if (this.students == null) {
+                this.students = new HashSet<>();
+            }
+            this.students.add(student);
+        }
+    }
 
+    public void addUser(CourseAuthor courseAuthor) {
+        if (courseAuthor != null) {
+            if (this.courseAuthors == null) {
+                this.courseAuthors = new HashSet<>();
+            }
+            this.courseAuthors.add(courseAuthor);
+        }
+    }
 }

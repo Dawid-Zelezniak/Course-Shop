@@ -6,6 +6,7 @@ import com.zelezniak.project.entity.Role;
 import com.zelezniak.project.repository.CourseAuthorRepository;
 import com.zelezniak.project.repository.RoleRepository;
 import jakarta.annotation.PostConstruct;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,4 +50,5 @@ final class DataInitializationService {
         }
 
     }
+
 }

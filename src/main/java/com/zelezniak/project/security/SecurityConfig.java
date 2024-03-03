@@ -51,6 +51,7 @@ public class SecurityConfig {
                             .requestMatchers("/all/students/**").hasRole("ADMIN")
                             .requestMatchers("/all/authors/**").hasRole("ADMIN")
                             .requestMatchers("/checkout/**").hasRole("STUDENT")
+                            .requestMatchers("/purchased/courses/**").hasRole("STUDENT")
                             .requestMatchers("/registration/**").permitAll()
                             .anyRequest().authenticated();
                 })

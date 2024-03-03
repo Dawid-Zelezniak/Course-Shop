@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
+import com.zelezniak.project.entity.Order;
 import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CustomErrors;
@@ -24,9 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class CourseServiceImpl implements CourseService {
+
     private final CourseRepository courseRepository;
     private final CourseAuthorRepository authorRepository;
     private final StudentRepository studentRepository;
+    private final OrderService orderService;
 
     @Transactional
     public void addCourse(Course course, Long authorId) {
@@ -35,22 +38,10 @@ public class CourseServiceImpl implements CourseService {
             checkIfCourseExists(course);
             CourseAuthor authorFromDb = getAuthorById(authorId);
             authorFromDb.addAuthorCourse(course);
-            log.info("DOCHODZIMY TUTAJ");
             courseRepository.save(course);
             authorRepository.save(authorFromDb);
             course.setCourseAuthor(authorFromDb);
-            log.info("Course AUTHOR po ustawieniu" + course.getCourseAuthor().getFullName());
         }
-    }
-
-    @Transactional
-    public void deleteCourse(Long courseId, CourseAuthor authorFromDb) {
-        Course courseFromDb = courseRepository.findById(courseId)
-                .orElseThrow(() -> new CourseException(CustomErrors.COURSE_NOT_FOUND));
-        CourseAuthor courseAuthor = courseFromDb.getCourseAuthor();
-        courseAuthor.removeCourseFromCreatedByAuthor(courseId);
-        authorRepository.save(authorFromDb);
-        courseRepository.deleteById(courseId);
     }
 
     public Course getById(Long courseId) {
@@ -58,13 +49,15 @@ public class CourseServiceImpl implements CourseService {
                 new CourseException(CustomErrors.COURSE_NOT_FOUND));
     }
 
+    @Transactional
     public void updateCourse(Long courseId, Course course) {
-        Course courseFromDb = this.getById(courseId);
-        if (!courseFromDb.getTitle().equals(course.getTitle()) && this.courseRepository.existsByTitle(course.getTitle())) {
+        Course courseFromDb = getById(courseId);
+        //check if course exists in database
+        if (!courseFromDb.getTitle().equals(course.getTitle()) && courseRepository.existsByTitle(course.getTitle())) {
             throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);
         } else {
-            this.setCourse(courseFromDb, course);
-            this.courseRepository.save(courseFromDb);
+            setCourse(courseFromDb, course);
+            courseRepository.save(courseFromDb);
         }
     }
 
@@ -72,13 +65,54 @@ public class CourseServiceImpl implements CourseService {
         List<Course> coursesFromDb = courseRepository.findAll();
         CourseAuthor courseAuthor = authorRepository.findByEmail(userEmail);
         if (courseAuthor != null) {
-            log.info("KURSY W BAZIE " + coursesFromDb.size());
             return coursesAvailableForAuthor(coursesFromDb, courseAuthor);
         } else {
-            log.info("KURSY DLA STUDENTA");
             Student student = studentRepository.findByEmail(userEmail);
             return coursesAvailableForStudent(coursesFromDb, student);
         }
+    }
+
+    @Override
+    @Transactional
+    public void addBoughtCourseAndOrderForUser(String email, String productName) {
+        CourseAuthor author = authorRepository.findByEmail(email);
+        Course course = courseRepository.findByTitle(productName)
+                .orElseThrow(() -> new CourseException(CustomErrors.COURSE_NOT_FOUND));
+
+        if (author != null) {
+            addCourseAndOrder(course, author);
+        } else {
+            Student student = studentRepository.findByEmail(email);
+            addCourseAndOrder(course, student);
+        }
+    }
+
+    private void addCourseAndOrder(Course course, CourseAuthor author) {
+        Order order = orderService.createOrder(course, author);
+        course.addOrder(order);
+        author.addOrder(order);
+        addCourseForAuthor(author, course);
+    }
+
+    private void addCourseAndOrder(Course course, Student student) {
+        Order order = orderService.createOrder(course, student);
+        course.addOrder(order);
+        student.addOrder(order);
+        addCourseForStudent(student, course);
+    }
+
+    private void addCourseForStudent(Student student, Course course) {
+        student.addBoughtCourse(course);
+        course.addUserToCourse(student);
+        studentRepository.save(student);
+        courseRepository.save(course);
+    }
+
+    private void addCourseForAuthor(CourseAuthor author, Course course) {
+        author.addBoughtCourse(course);
+        course.addUserToCourse(author);
+        authorRepository.save(author);
+        courseRepository.save(course);
     }
 
     private List<Course> coursesAvailableForStudent(List<Course> coursesFromDb, Student student) {
@@ -97,7 +131,6 @@ public class CourseServiceImpl implements CourseService {
 
     private static List<Course> deleteCoursesFromList(List<Course> coursesFromDb, Set<Course> coursesToDelete) {
         coursesFromDb.removeAll(coursesToDelete);
-        coursesFromDb.forEach(course -> log.info("KURS " + course));
         return coursesFromDb;
     }
 
@@ -109,7 +142,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     private void checkIfCourseExists(Course course) {
-        if (this.courseRepository.existsByTitle(course.getTitle())) {
+        if (courseRepository.existsByTitle(course.getTitle())) {
             throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);
         }
     }

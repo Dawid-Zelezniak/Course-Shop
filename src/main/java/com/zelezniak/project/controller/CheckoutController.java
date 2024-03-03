@@ -1,6 +1,8 @@
 package com.zelezniak.project.controller;
 
 import com.zelezniak.project.dto.PaymentInfo;
+import com.zelezniak.project.service.CourseService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,13 @@ import java.security.Principal;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class CheckoutController {
+
+
+    private final CourseService courseService;
+
+
     @Value("${stripe.api.publicKey}")
     private String publicKey;
 
@@ -28,12 +36,10 @@ public class CheckoutController {
 
 
     @GetMapping("/success/payment")
-    public ResponseEntity<String> handleSuccessPayment(
-            Principal principal,
-            @RequestParam String productName) {
+    public String handleSuccessPayment(Principal principal, @RequestParam String productName) {
         String email = principal.getName();
-
-        return ResponseEntity.ok("Payment success! Email: " + email + ", Product: " + productName);
+        courseService.addBoughtCourseAndOrderForUser(email, productName);
+        return "courses";
     }
 
 

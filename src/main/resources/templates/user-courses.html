@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>List-courses</title>
+    <title>Bought-courses</title>
     <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -66,44 +66,15 @@
 
 <body>
 <div class="container">
-    <hr>
-    <!-- Add a logout button -->
-    <form action="#" th:action="@{/logout}" method="POST">
 
-        <input type="submit" value="Logout" class="btn btn-outline-primary mt-2"/>
-
-    </form>
-    <p>
-        User: <span sec:authentication="principal.username"></span>
-        <br><br>
-        Role(s): <span sec:authentication="principal.authorities"></span>
-    </p>
-    <hr>
-
-    <div sec:authorize="hasRole('TEACHER')">
-        <!-- New Course Button -->
-        <a th:href="@{/add/courses/form}" class="btn btn-primary mb-2">New course</a>
-        <a th:href="@{/author/courses}" class="btn btn-primary mb-2">Your courses</a>
-    </div>
-
-    <div sec:authorize="hasRole('ADMIN')">
-        <!-- App users -->
-        <a th:href="@{/all/students}" class="btn btn-primary mb-2">All students</a>
-        <a th:href="@{/all/authors}" class="btn btn-primary mb-2">All course authors</a>
-    </div>
-
-    <div>
-        <a th:href="@{/purchased/courses}" class="btn btn-primary mb-2">Bought courses</a>
-    </div>
-
-    <h2>COURSES YOU CAN BUY</h2>
+    <h2>COURSES YOU BOUGHT</h2>
 
     <!-- Courses Table -->
     <table class="table table-bordered table-striped" id="courses-table">
         <thead>
         <tr>
             <td>Course title</td>
-            <td>Price $</td>
+            <td>Price</td>
             <td>Action</td>
         </tr>
         </thead>
@@ -113,11 +84,11 @@
             <td th:text="${course.price}"></td>
             <td>
                 <a th:href="@{/courses/details(courseId=${course.courseId})}" class="btn btn-info">Details</a>
-                <a th:href="@{/courses/payment/info(courseId=${course.courseId})}" class="btn btn-info">Buy</a>
             </td>
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/courses}" class="btn btn-info">Back</a>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.js"></script>

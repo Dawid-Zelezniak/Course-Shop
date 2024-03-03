@@ -20,15 +20,9 @@ public class StudentServiceImpl implements StudentService {
         return this.studentRepository.findAll();
     }
 
-    @Transactional
-    public void delete(Long studentId) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new CourseException(CustomErrors.USER_NOT_FOUND));
-        studentRepository.delete(student);
-    }
 
     public Student findByEmail(String email) {
-        return this.studentRepository.findByEmail(email);
+        return studentRepository.findByEmail(email);
     }
 
 }

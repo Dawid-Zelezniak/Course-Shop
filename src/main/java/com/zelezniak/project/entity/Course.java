@@ -1,15 +1,6 @@
 package com.zelezniak.project.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -38,7 +29,7 @@ public class Course {
     private Double price;
 
     @NotBlank(message = "Title can not be blank")
-    @Column(name = "title",unique = true)
+    @Column(name = "title", unique = true)
     private String title;
 
     @NotBlank(message = "Description can not be blank")
@@ -67,12 +58,15 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<CourseAuthor> enrolledAuthors;
 
+    @OneToMany(mappedBy = "orderedCourse", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<Order> orders;
+
+
     public void addUserToCourse(Student student) {
         if (student != null) {
             if (this.enrolledStudents == null) {
                 this.enrolledStudents = new HashSet<>();
             }
-
             this.enrolledStudents.add(student);
         }
     }
@@ -90,6 +84,17 @@ public class Course {
             this.enrolledAuthors.add(courseAuthor);
         }
     }
+
+    public void addOrder(Order order) {
+        if (order != null) {
+            if (this.orders == null) {
+                this.orders = new HashSet<>();
+            }
+            this.orders.add(order);
+            order.setOrderedCourse(this); // Ustawia kurs dla zamówienia
+        }
+    }
+
 
     public int countTotalParticipants() {
         return enrolledAuthors.size() + enrolledStudents.size();

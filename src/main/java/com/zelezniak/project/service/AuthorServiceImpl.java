@@ -18,12 +18,7 @@ public class AuthorServiceImpl implements com.zelezniak.project.service.AuthorSe
     private final CourseAuthorRepository authorRepository;
 
     public CourseAuthor findByEmail(String email) {
-        CourseAuthor authorFromDb = authorRepository.findByEmail(email);
-        if (authorFromDb != null) {
-            return authorFromDb;
-        } else {
-            throw new CourseException(CustomErrors.USER_NOT_FOUND);
-        }
+        return authorRepository.findByEmail(email);
     }
 
     public List<CourseAuthor> getAllAuthors() {

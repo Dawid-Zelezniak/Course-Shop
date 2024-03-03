@@ -1,8 +1,6 @@
 package com.zelezniak.project.controller;
 
 
-import java.util.List;
-
 import com.zelezniak.project.entity.CourseAuthor;
 import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.service.AuthorService;
@@ -11,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
