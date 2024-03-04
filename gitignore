@@ -1,0 +1,9 @@
+/target/
+/.idea/
+/docs/
+/reports/
+
+*.class
+*.exe
+*.tmp
+Thumbs.db

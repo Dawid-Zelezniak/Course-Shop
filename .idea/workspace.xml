@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0215c1a8-ef7c-4247-9e97-7e5a0959c45e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/rabbitmq/EmailInfoPublisherImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/rabbitmq/EmailInfoPublisherImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email-service/src/main/java/com/zelezniak/emailservice/EmailServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/java/com/zelezniak/emailservice/EmailServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email-service/src/main/java/com/zelezniak/emailservice/dto/EmailInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/java/com/zelezniak/emailservice/dto/EmailInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email-service/src/main/java/com/zelezniak/emailservice/rabbitmq/Listener.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/java/com/zelezniak/emailservice/rabbitmq/Listener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/email-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/email-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +122,7 @@
       <option name="presentableId" value="Default" />
       <updated>1709540964961</updated>
       <workItem from="1709540967354" duration="8832000" />
-      <workItem from="1709549861580" duration="2364000" />
+      <workItem from="1709549861580" duration="3713000" />
     </task>
     <servers />
   </component>
