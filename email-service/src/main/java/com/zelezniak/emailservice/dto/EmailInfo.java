@@ -2,8 +2,10 @@ package com.zelezniak.emailservice.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class EmailInfo {
+public class EmailInfo implements Serializable {
 
     private String email;
     private String firstName;

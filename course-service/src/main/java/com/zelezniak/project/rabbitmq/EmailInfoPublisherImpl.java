@@ -5,11 +5,13 @@ import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
 import com.zelezniak.project.entity.Student;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class EmailInfoPublisherImpl implements EmailInfoSender {
 
     private final RabbitTemplate rabbitTemplate;
@@ -27,6 +29,7 @@ public class EmailInfoPublisherImpl implements EmailInfoSender {
                 .orderId(orderId)
                 .build();
         publishEmailInfo(info);
+        log.info("IIIIIIIIIIIIIIIII"+info);
     }
 
     @Override
@@ -40,6 +43,7 @@ public class EmailInfoPublisherImpl implements EmailInfoSender {
                 .orderId(orderId)
                 .build();
         publishEmailInfo(info);
+        log.info("222222222222222222"+info);
     }
 
     private void publishEmailInfo(EmailInfo emailInfo) {
