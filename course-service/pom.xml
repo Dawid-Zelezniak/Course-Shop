@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.zelezniak</groupId>
-    <artifactId>Courses-App</artifactId>
+    <artifactId>course-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>course-service</name>
     <description>Sample Courses Management System</description>
