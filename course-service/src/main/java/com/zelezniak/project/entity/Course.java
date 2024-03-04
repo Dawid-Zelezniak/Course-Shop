@@ -119,5 +119,4 @@ public class Course {
                 this.category,
                 this.dateCreated);
     }
-
 }

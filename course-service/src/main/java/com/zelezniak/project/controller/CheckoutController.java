@@ -39,6 +39,4 @@ public class CheckoutController {
         courseService.addBoughtCourseAndOrderForUser(email, productName);
         return "courses";
     }
-
-
 }
