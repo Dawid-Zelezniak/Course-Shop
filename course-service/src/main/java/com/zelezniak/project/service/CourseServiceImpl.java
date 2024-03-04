@@ -13,6 +13,7 @@ import com.zelezniak.project.entity.Order;
 import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CustomErrors;
+import com.zelezniak.project.rabbitmq.EmailInfoSender;
 import com.zelezniak.project.repository.CourseAuthorRepository;
 import com.zelezniak.project.repository.CourseRepository;
 import com.zelezniak.project.repository.StudentRepository;
@@ -30,6 +31,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseAuthorRepository authorRepository;
     private final StudentRepository studentRepository;
     private final OrderService orderService;
+    private final EmailInfoSender emailInfoPublisher;
 
     @Transactional
     public void addCourse(Course course, Long authorId) {
@@ -82,6 +84,7 @@ public class CourseServiceImpl implements CourseService {
 
     private void addCourseAndOrder(Course course, CourseAuthor author) {
         Order order = orderService.createOrder(course, author);
+        emailInfoPublisher.prepareEmailInfo(course, author,order.getOrderId());
         course.addOrder(order);
         author.addOrder(order);
         addCourseForAuthor(author, course);
@@ -89,6 +92,7 @@ public class CourseServiceImpl implements CourseService {
 
     private void addCourseAndOrder(Course course, Student student) {
         Order order = orderService.createOrder(course, student);
+        emailInfoPublisher.prepareEmailInfo(course,student,order.getOrderId());
         course.addOrder(order);
         student.addOrder(order);
         addCourseForStudent(student, course);

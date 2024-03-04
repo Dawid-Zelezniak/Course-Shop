@@ -37,6 +37,6 @@ public class CheckoutController {
     public String handleSuccessPayment(Principal principal, @RequestParam String productName) {
         String email = principal.getName();
         courseService.addBoughtCourseAndOrderForUser(email, productName);
-        return "courses";
+        return "payment-success";
     }
 }
