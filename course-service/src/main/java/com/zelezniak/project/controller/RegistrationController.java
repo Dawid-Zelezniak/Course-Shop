@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -24,22 +26,22 @@ public class RegistrationController {
 
     @GetMapping({"/registration"})
     public String showRegistrationForm(Model model) {
-        model.addAttribute("webUser", new UserData());
-        return "register/registration-form";
+        model.addAttribute(WEB_USER_ATTRIBUTE, new UserData());
+        return REGISTRATION_VIEW;
     }
 
     @PostMapping({"/registration/process"})
-    public ModelAndView processRegistrationForm(@Valid @ModelAttribute("webUser") UserData user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView("register/registration-form");
+    public ModelAndView processRegistrationForm(@Valid @ModelAttribute(WEB_USER_ATTRIBUTE) UserData user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView(REGISTRATION_VIEW);
         ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
         if (errors != null) {return errors;} else {
             try {
                 this.userService.createNewUser(user);
-                modelAndView.addObject("info", "User created successfully");
+                modelAndView.addObject(INFO_ATTRIBUTE, "User created successfully");
                 return modelAndView;
             } catch (CourseException var6) {
                 return modelAndView.addObject(
-                        "errorInfo", new ErrorInfo(var6.getCourseError().getMessage()));
+                        ERROR_INFO_ATTRIBUTE, new ErrorInfo(var6.getCourseError().getMessage()));
             }
         }
     }

@@ -11,14 +11,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class EmailInfoPublisherImpl implements EmailInfoSender {
 
     private final RabbitTemplate rabbitTemplate;
 
     private static final String QUEUE_NAME = "emails-queue";
 
-    @Override
     public void prepareEmailInfo(Course course, CourseAuthor author, String orderId) {
         EmailInfo info = EmailInfo.builder()
                 .email(author.getEmail())
@@ -29,10 +27,8 @@ public class EmailInfoPublisherImpl implements EmailInfoSender {
                 .orderId(orderId)
                 .build();
         publishEmailInfo(info);
-        log.info("IIIIIIIIIIIIIIIII"+info);
     }
 
-    @Override
     public void prepareEmailInfo(Course course, Student student,String orderId) {
         EmailInfo info = EmailInfo.builder()
                 .email(student.getEmail())
@@ -43,7 +39,6 @@ public class EmailInfoPublisherImpl implements EmailInfoSender {
                 .orderId(orderId)
                 .build();
         publishEmailInfo(info);
-        log.info("222222222222222222"+info);
     }
 
     private void publishEmailInfo(EmailInfo emailInfo) {

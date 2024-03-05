@@ -8,6 +8,8 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.zelezniak.project.controller.AttributesAndTemplatesNames.ERROR_INFO_ATTRIBUTE;
+
 public class FormValidationManager {
 
     public static ModelAndView getErrors(BindingResult bindingResult, ModelAndView modelAndView) {
@@ -18,7 +20,7 @@ public class FormValidationManager {
                             .map(DefaultMessageSourceResolvable::getDefaultMessage)
                             .map(ErrorInfo::new)
                             .collect(Collectors.toList());
-            return modelAndView.addObject("errorInfo", errorInfos);
+            return modelAndView.addObject(ERROR_INFO_ATTRIBUTE, errorInfos);
         } else {return null;}
     }
 }

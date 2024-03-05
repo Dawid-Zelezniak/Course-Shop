@@ -25,4 +25,8 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByEmail(email);
     }
 
+    public void saveStudent(Student student) {
+        if(student !=null){studentRepository.save(student);}
+    }
+
 }

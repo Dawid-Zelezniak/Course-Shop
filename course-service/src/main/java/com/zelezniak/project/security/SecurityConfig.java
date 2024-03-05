@@ -43,16 +43,16 @@ public class SecurityConfig {
         httpSecurity.csrf().disable();
         httpSecurity.authorizeRequests((configurer) -> {
                     configurer
+                            .requestMatchers("/registration/**").permitAll()
+                            .requestMatchers("/login/**").permitAll()
                             .requestMatchers("/courses").hasRole("STUDENT")
                             .requestMatchers("/add/**").hasRole("TEACHER")
                             .requestMatchers("/save/**").hasRole("TEACHER")
                             .requestMatchers("/author/**").hasRole("TEACHER")
-                            .requestMatchers("/delete/**").hasAnyRole("TEACHER", "ADMIN")
                             .requestMatchers("/all/students/**").hasRole("ADMIN")
                             .requestMatchers("/all/authors/**").hasRole("ADMIN")
                             .requestMatchers("/checkout/**").hasRole("STUDENT")
                             .requestMatchers("/purchased/courses/**").hasRole("STUDENT")
-                            .requestMatchers("/registration/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .formLogin(form ->

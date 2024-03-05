@@ -2,6 +2,7 @@ package com.zelezniak.project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -34,7 +35,8 @@ public class Student {
     private String password;
 
     @Column(name = "date_created")
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
 
     @ManyToMany(mappedBy = "enrolledStudents")
     private Set<Course> boughtCourses;

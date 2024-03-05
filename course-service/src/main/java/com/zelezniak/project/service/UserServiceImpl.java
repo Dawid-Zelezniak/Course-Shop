@@ -10,20 +10,17 @@ import com.zelezniak.project.repository.CourseAuthorRepository;
 import com.zelezniak.project.repository.RoleRepository;
 import com.zelezniak.project.repository.StudentRepository;
 import com.zelezniak.project.user.UserData;
+import com.zelezniak.project.user.UserDetailsBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -44,9 +41,9 @@ public class UserServiceImpl implements UserService {
             validateIfUserExistsAndEmailFormat(user.getEmail());
             String role = user.getRole();
             if (role.equals(ROLE_STUDENT)) {
-                this.studentRepository.save(this.newStudent(user));
+                studentRepository.save(newStudent(user));
             } else if (role.equals(ROLE_TEACHER)) {
-                authorRepository.save(this.newAuthor(user));
+                authorRepository.save(newAuthor(user));
             }
         }
     }
@@ -88,30 +85,14 @@ public class UserServiceImpl implements UserService {
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         CourseAuthor author = authorRepository.findByEmail(username);
-        if (author != null) {return buildUserDetails(author);}
+        if (author != null) {return UserDetailsBuilder.buildUserDetails(author);}
         else {
             Student student = studentRepository.findByEmail(username);
-            if (student != null) {return buildUserDetails(student);}
+            if (student != null) {return UserDetailsBuilder.buildUserDetails(student);}
             else {
                 throw new UsernameNotFoundException("User not found with username: " + username);
             }
         }
-    }
-
-    private UserDetails buildUserDetails(CourseAuthor author) {
-        Collection<SimpleGrantedAuthority> authorities = author.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-        return new User(author.getEmail(), author.getPassword(), authorities);
-    }
-
-    private UserDetails buildUserDetails(Student student) {
-        Collection<SimpleGrantedAuthority> authorities = student.getRoles()
-                .stream()
-                .map((role) -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
-        return new User(student.getEmail(), student.getPassword(), authorities);
     }
 
     private String encodePassword(String password) {
@@ -122,8 +103,6 @@ public class UserServiceImpl implements UserService {
         if (email.matches(UserService.EMAIL_PATTERN)) {
             if (studentRepository.existsByEmail(email) || authorRepository.existsByEmail(email)) {
                 throw new CourseException(CustomErrors.USER_ALREADY_EXISTS);}
-        } else {
-            throw new CourseException(CustomErrors.EMAIL_IN_WRONG_FORMAT);
-        }
+        } else {throw new CourseException(CustomErrors.EMAIL_IN_WRONG_FORMAT);}
     }
 }

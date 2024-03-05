@@ -27,7 +27,6 @@ public class Order {
     private Double totalPrice;
 
     @Column(name = "date_created")
-    @CreationTimestamp
     private LocalDateTime dateCreated;
 
     @ManyToOne
@@ -59,4 +58,5 @@ public class Order {
             courseAuthors.add(courseAuthor);
         }
     }
+
 }

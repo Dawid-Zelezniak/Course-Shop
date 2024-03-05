@@ -8,6 +8,7 @@ import com.zelezniak.project.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -22,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(generateOrderId())
                 .totalPrice(course.getPrice())
                 .orderedCourse(course)
+                .dateCreated(LocalDateTime.now())
                 .build();
         order.addUser(author);
         orderRepository.save(order);
@@ -34,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
                 .orderId(generateOrderId())
                 .totalPrice(course.getPrice())
                 .orderedCourse(course)
+                .dateCreated(LocalDateTime.now())
                 .build();
         order.addUser(student);
         orderRepository.save(order);

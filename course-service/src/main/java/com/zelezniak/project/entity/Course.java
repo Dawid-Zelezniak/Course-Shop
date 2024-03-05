@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -44,6 +45,7 @@ public class Course {
     private String category;
 
     @Column(name = "date_created")
+    @CreationTimestamp
     private LocalDateTime dateCreated;
 
     @ManyToMany
@@ -69,10 +71,6 @@ public class Course {
             }
             enrolledStudents.add(student);
         }
-    }
-
-    {
-        dateCreated = LocalDateTime.now();
     }
 
     public void addUserToCourse(CourseAuthor courseAuthor) {

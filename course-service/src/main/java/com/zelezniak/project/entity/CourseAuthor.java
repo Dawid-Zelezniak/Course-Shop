@@ -2,8 +2,10 @@ package com.zelezniak.project.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -35,6 +37,7 @@ public class CourseAuthor {
     private String password;
 
     @Column(name = "date_created")
+    @CreationTimestamp
     private LocalDateTime dateCreated;
 
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -81,9 +84,8 @@ public class CourseAuthor {
     }
 
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (o != null && this.getClass() == o.getClass()) {
+        if (this == o) {return true;}
+        else if (o != null && this.getClass() == o.getClass()) {
             CourseAuthor that = (CourseAuthor) o;
             return Objects.equals(this.authorId, that.authorId) &&
                     Objects.equals(this.firstName, that.firstName) &&
@@ -97,6 +99,4 @@ public class CourseAuthor {
         return Objects.hash(this.authorId, this.firstName,
                 this.lastName, this.email, this.dateCreated);
     }
-
-    {dateCreated = LocalDateTime.now();}
 }

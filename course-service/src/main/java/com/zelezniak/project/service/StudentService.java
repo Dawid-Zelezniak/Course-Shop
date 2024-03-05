@@ -9,4 +9,6 @@ public interface StudentService {
     List<Student> getAllStudents();
 
     Student findByEmail(String email);
+
+    void saveStudent(Student student);
 }

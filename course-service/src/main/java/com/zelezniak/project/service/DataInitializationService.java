@@ -24,16 +24,15 @@ final class DataInitializationService {
 
     @PostConstruct
     private void initializeRoles() {
-        if (this.roleRepository.count() == 0L) {
+        if (roleRepository.count() == 0L) {
             Role roleStudent = new Role("ROLE_STUDENT");
             Role roleTeacher = new Role("ROLE_TEACHER");
             Role roleAdmin = new Role("ROLE_ADMIN");
-            this.roleRepository.save(roleStudent);
-            this.roleRepository.save(roleTeacher);
-            this.roleRepository.save(roleAdmin);
-            this.initializeAdmin(roleStudent, roleAdmin, roleTeacher);
+            roleRepository.save(roleStudent);
+            roleRepository.save(roleTeacher);
+            roleRepository.save(roleAdmin);
+            initializeAdmin(roleStudent, roleAdmin, roleTeacher);
         }
-
     }
 
     private void initializeAdmin(Role roleStudent, Role roleAdmin, Role roleTeacher) {
@@ -41,13 +40,13 @@ final class DataInitializationService {
         if (byEmail == null) {
             CourseAuthor admin = new CourseAuthor();
             admin.setEmail("admin@gmail.com");
-            admin.setPassword(this.encoder.encode("admin123"));
+            admin.setPassword(encoder.encode("admin123"));
             Set<Role> roles = new HashSet<>();
             roles.add(roleStudent);
             roles.add(roleTeacher);
             roles.add(roleAdmin);
             admin.setRoles(roles);
-            this.authorRepository.save(admin);
+            authorRepository.save(admin);
         }
     }
 }

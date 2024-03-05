@@ -28,8 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
-    private final CourseAuthorRepository authorRepository;
-    private final StudentRepository studentRepository;
+    private final AuthorService authorService;
+    private final StudentService studentService;
     private final OrderService orderService;
     private final EmailInfoSender emailInfoPublisher;
 
@@ -37,10 +37,10 @@ public class CourseServiceImpl implements CourseService {
     public void addCourse(Course course, Long authorId) {
         if (course != null) {
             checkIfCourseExists(course);
-            CourseAuthor authorFromDb = getAuthorById(authorId);
+            CourseAuthor authorFromDb = authorService.getById(authorId);
             authorFromDb.addAuthorCourse(course);
             courseRepository.save(course);
-            authorRepository.save(authorFromDb);
+            authorService.saveAuthor(authorFromDb);
             course.setCourseAuthor(authorFromDb);
         }
     }
@@ -64,18 +64,17 @@ public class CourseServiceImpl implements CourseService {
 
     public List<Course> getAllAvailableCourses(String userEmail) {
         List<Course> coursesFromDb = courseRepository.findAll();
-        CourseAuthor courseAuthor = authorRepository.findByEmail(userEmail);
-        Student student = studentRepository.findByEmail(userEmail);
+        CourseAuthor courseAuthor = authorService.findByEmail(userEmail);
+        Student student = studentService.findByEmail(userEmail);
         return courseAuthor != null ?
                 coursesAvailableForAuthor(coursesFromDb, courseAuthor) :
                 coursesAvailableForStudent(coursesFromDb, student);
     }
 
-    @Override
     @Transactional
     public void addBoughtCourseAndOrderForUser(String email, String productName) {
-        CourseAuthor author = authorRepository.findByEmail(email);
-        Student student = studentRepository.findByEmail(email);
+        CourseAuthor author = authorService.findByEmail(email);
+        Student student = studentService.findByEmail(email);
         Course course = courseRepository.findByTitle(productName)
                 .orElseThrow(() -> new CourseException(CustomErrors.COURSE_NOT_FOUND));
         if (author != null) {addCourseAndOrder(course, author);}
@@ -101,14 +100,14 @@ public class CourseServiceImpl implements CourseService {
     private void addCourseForStudent(Student student, Course course) {
         student.addBoughtCourse(course);
         course.addUserToCourse(student);
-        studentRepository.save(student);
+        studentService.saveStudent(student);
         courseRepository.save(course);
     }
 
     private void addCourseForAuthor(CourseAuthor author, Course course) {
         author.addBoughtCourse(course);
         course.addUserToCourse(author);
-        authorRepository.save(author);
+        authorService.saveAuthor(author);
         courseRepository.save(course);
     }
 
@@ -142,10 +141,5 @@ public class CourseServiceImpl implements CourseService {
         if (courseRepository.existsByTitle(course.getTitle())) {
             throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);
         }
-    }
-
-    private CourseAuthor getAuthorById(Long authorId) {
-        return authorRepository.findByAuthorId(authorId)
-                .orElseThrow(() -> new CourseException(CustomErrors.USER_NOT_FOUND));
     }
 }
