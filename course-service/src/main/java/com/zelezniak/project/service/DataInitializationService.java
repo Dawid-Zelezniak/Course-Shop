@@ -12,9 +12,10 @@ import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 @RequiredArgsConstructor
 final class DataInitializationService {
 
@@ -36,7 +37,7 @@ final class DataInitializationService {
     }
 
     private void initializeAdmin(Role roleStudent, Role roleAdmin, Role roleTeacher) {
-        CourseAuthor byEmail = this.authorRepository.findByEmail("admin@gmail.com");
+        CourseAuthor byEmail = authorRepository.findByEmail("admin@gmail.com");
         if (byEmail == null) {
             CourseAuthor admin = new CourseAuthor();
             admin.setEmail("admin@gmail.com");
