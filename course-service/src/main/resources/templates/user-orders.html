@@ -76,6 +76,7 @@
             <td>Price $</td>
             <td>Date created</td>
             <td>Ordered Course</td>
+            <td>Transaction ID</td>
         </tr>
         </thead>
         <tbody>
@@ -83,6 +84,7 @@
             <td th:text="${order.totalPrice}"></td>
             <td th:text="${#temporals.format(order.dateCreated, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${order.orderedCourse.title}"></td>
+            <td th:text="${order.orderId}"></td>
         </tr>
         </tbody>
         <tfoot>
