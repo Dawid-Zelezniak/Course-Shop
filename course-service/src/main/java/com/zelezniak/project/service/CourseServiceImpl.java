@@ -46,15 +46,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     public Course findById(Long courseId) {
-        return courseRepository.findById(courseId).orElseThrow(() ->
-                new CourseException(CustomErrors.COURSE_NOT_FOUND));
+        return courseRepository.findById(courseId)
+                .orElseThrow(() ->new CourseException(CustomErrors.COURSE_NOT_FOUND));
     }
 
     @Transactional
     public void updateCourse(Long courseId, Course course) {
         Course courseFromDb = findById(courseId);
         //check if course exists in database
-        if (!courseFromDb.getTitle().equals(course.getTitle()) && courseRepository.existsByTitle(course.getTitle())) {
+        if (!courseFromDb.getTitle().equals(course.getTitle())
+                && courseRepository.existsByTitle(course.getTitle())) {
             throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);}
         else {
             setCourse(courseFromDb, course);
