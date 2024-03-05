@@ -5,7 +5,6 @@ import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
 import com.zelezniak.project.entity.Student;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 

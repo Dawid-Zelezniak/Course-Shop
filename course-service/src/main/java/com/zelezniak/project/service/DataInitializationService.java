@@ -6,14 +6,12 @@ import com.zelezniak.project.entity.Role;
 import com.zelezniak.project.repository.CourseAuthorRepository;
 import com.zelezniak.project.repository.RoleRepository;
 import jakarta.annotation.PostConstruct;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor

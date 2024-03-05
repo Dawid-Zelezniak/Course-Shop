@@ -1,12 +1,6 @@
 package com.zelezniak.project.service;
 
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
 import com.zelezniak.project.entity.Order;
@@ -14,13 +8,17 @@ import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CustomErrors;
 import com.zelezniak.project.rabbitmq.EmailInfoSender;
-import com.zelezniak.project.repository.CourseAuthorRepository;
 import com.zelezniak.project.repository.CourseRepository;
-import com.zelezniak.project.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor

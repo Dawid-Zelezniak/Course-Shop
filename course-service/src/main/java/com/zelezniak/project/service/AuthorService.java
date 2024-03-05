@@ -1,8 +1,6 @@
 package com.zelezniak.project.service;
 
 
-
-import com.zelezniak.project.entity.Course;
 import com.zelezniak.project.entity.CourseAuthor;
 
 import java.util.List;
