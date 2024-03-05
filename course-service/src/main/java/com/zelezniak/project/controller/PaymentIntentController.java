@@ -4,7 +4,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.zelezniak.project.dto.PaymentInfo;
-import com.zelezniak.project.dto.Response;
+import com.zelezniak.project.dto.PaymentIntentResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +17,7 @@ public class PaymentIntentController {
 
     @PostMapping("/payment/intent")
     @ResponseBody
-    public Response createPaymentIntent(@RequestBody PaymentInfo paymentInfo)
+    public PaymentIntentResponse createPaymentIntent(@RequestBody PaymentInfo paymentInfo)
             throws StripeException {
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
@@ -34,6 +34,6 @@ public class PaymentIntentController {
                         ).build();
 
         PaymentIntent intent = PaymentIntent.create(params);
-        return new Response(intent.getId(), intent.getClientSecret());
+        return new PaymentIntentResponse(intent.getId(), intent.getClientSecret());
     }
 }
