@@ -31,7 +31,8 @@ public class RegistrationController {
     }
 
     @PostMapping({"/registration/process"})
-    public ModelAndView processRegistrationForm(@Valid @ModelAttribute(WEB_USER_ATTRIBUTE) UserData user, BindingResult bindingResult) {
+    public ModelAndView processRegistrationForm(@Valid @ModelAttribute(WEB_USER_ATTRIBUTE) UserData user,
+                                                BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView(REGISTRATION_VIEW);
         ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
         if (errors != null) {return errors;} else {
