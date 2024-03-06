@@ -2,8 +2,8 @@ package com.zelezniak.project.controller;
 
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
-import com.zelezniak.project.service.UserService;
 import com.zelezniak.project.user.UserData;
+import com.zelezniak.project.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

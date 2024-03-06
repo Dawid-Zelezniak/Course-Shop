@@ -1,8 +1,8 @@
 package com.zelezniak.project.rabbitmq;
 
-import com.zelezniak.project.entity.Course;
-import com.zelezniak.project.entity.CourseAuthor;
-import com.zelezniak.project.entity.Student;
+import com.zelezniak.project.course.Course;
+import com.zelezniak.project.author.CourseAuthor;
+import com.zelezniak.project.student.Student;
 
 public interface EmailInfoSender {
 

@@ -3,7 +3,7 @@ package com.zelezniak.emailservice.rabbitmq;
 import com.zelezniak.emailservice.dto.EmailInfo;
 import com.zelezniak.emailservice.exception.CustomErrors;
 import com.zelezniak.emailservice.exception.EmailException;
-import com.zelezniak.emailservice.service.EmailService;
+import com.zelezniak.emailservice.mail.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -1,7 +1,7 @@
 package com.zelezniak.project.security;
 
 import com.stripe.Stripe;
-import com.zelezniak.project.service.UserService;
+import com.zelezniak.project.user.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
