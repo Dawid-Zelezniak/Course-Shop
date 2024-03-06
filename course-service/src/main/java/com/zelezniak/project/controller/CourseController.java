@@ -9,6 +9,7 @@ import com.zelezniak.project.entity.Student;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
 import com.zelezniak.project.service.*;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,8 @@ import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
 @Slf4j
 @RequiredArgsConstructor
 public class CourseController {
+
+    private final HttpSession httpSession;
     private final CourseService courseService;
     private final AuthorService authorService;
     private final CheckoutService checkoutService;
@@ -57,14 +60,15 @@ public class CourseController {
         ModelAndView modelAndView = new ModelAndView(ADD_COURSES_VIEW);
         String email = principal.getName();
         CourseAuthor authorFromDb = authorService.findByEmail(email);
-        modelAndView.addObject(AUTHOR_ID_ATTRIBUTE, authorFromDb.getAuthorId());
+        httpSession.setAttribute(AUTHOR_ID_ATTRIBUTE,authorFromDb.getAuthorId());
         modelAndView.addObject(COURSE_ATTRIBUTE, new Course());
         return modelAndView;
     }
 
     @PostMapping("/save/courses")
     public ModelAndView saveCourse(@ModelAttribute(COURSE_ATTRIBUTE) @Valid Course course,
-                                   @RequestParam Long authorId, BindingResult bindingResult) {
+                                   BindingResult bindingResult) {
+        Long authorId = (Long)httpSession.getAttribute(AUTHOR_ID_ATTRIBUTE);
         ModelAndView modelAndView = new ModelAndView(ADD_COURSES_VIEW);
         ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
         if (errors != null) {return errors;}
