@@ -14,9 +14,6 @@
     <hr>
     <form th:action="@{/save/courses}" th:object="${course}" method="post">
 
-        <!-- Hidden field for author ID -->
-        <input type="hidden" name="authorId" th:value="${authorId}" />
-
         <!-- Course Title -->
         <div class="form-group">
             <label for="title">Course title</label>
