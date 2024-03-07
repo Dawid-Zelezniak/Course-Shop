@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class UserDetailsBuilder {
+class UserDetailsBuilder {
 
     public static UserDetails buildUserDetails(CourseAuthor author) {
         Collection<SimpleGrantedAuthority> authorities = author.getRoles()
