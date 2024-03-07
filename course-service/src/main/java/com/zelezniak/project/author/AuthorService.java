@@ -13,4 +13,5 @@ public interface AuthorService {
 
     void saveAuthor(CourseAuthor author);
 
+    boolean existsByEmail(String email);
 }
