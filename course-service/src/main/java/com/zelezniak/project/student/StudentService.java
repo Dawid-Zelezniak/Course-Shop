@@ -9,4 +9,6 @@ public interface StudentService {
     Student findByEmail(String email);
 
     void saveStudent(Student student);
+
+    boolean existsByEmail(String email);
 }
