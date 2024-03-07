@@ -3,13 +3,16 @@ package com.zelezniak.project.student;
 import com.zelezniak.project.course.Course;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.role.Role;
+import com.zelezniak.project.user.UserData;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Entity
 @Getter
@@ -64,6 +67,18 @@ public class Student {
         if (course != null) {
             if (boughtCourses == null) {boughtCourses = new HashSet<>();}
             boughtCourses.add(course);
+        }
+    }
+
+    public static final class StudentBuilder {
+
+        public static Student buildStudent(UserData user, BCryptPasswordEncoder passwordEncoder) {
+            return Student.builder()
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .email(user.getEmail())
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .build();
         }
     }
 }
