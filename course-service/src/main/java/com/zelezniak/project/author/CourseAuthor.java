@@ -3,14 +3,17 @@ package com.zelezniak.project.author;
 import com.zelezniak.project.course.Course;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.role.Role;
+import com.zelezniak.project.user.UserData;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
 
 @Entity
 @Getter
@@ -100,5 +103,17 @@ public class CourseAuthor {
     public int hashCode() {
         return Objects.hash(this.authorId, this.firstName,
                 this.lastName, this.email, this.dateCreated);
+    }
+
+    public static final class CourseAuthorBuilder{
+
+        public static CourseAuthor buildAuthor(UserData user, BCryptPasswordEncoder passwordEncoder) {
+            return CourseAuthor.builder()
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .email(user.getEmail())
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .build();
+        }
     }
 }
