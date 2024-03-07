@@ -10,33 +10,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class EmailInfoPublisherImpl implements EmailInfoSender {
+public class EmailInfoPublisherImpl implements EmailPublisherService {
 
     private final RabbitTemplate rabbitTemplate;
 
     private static final String QUEUE_NAME = "emails-queue";
 
-    public void prepareEmailInfo(Course course, CourseAuthor author, String orderId) {
-        EmailInfo info = EmailInfo.builder()
-                .email(author.getEmail())
-                .title(course.getTitle())
-                .price(course.getPrice())
-                .firstName(author.getFirstName())
-                .lastName(author.getLastName())
-                .orderId(orderId)
-                .build();
+    public void prepareAndSendEmailInfo(Course course, CourseAuthor author, String orderId) {
+        EmailInfo info = EmailInfo
+                .EmailInfoBuilder
+                .buildEmailInfo(course,author,orderId);
         publishEmailInfo(info);
     }
 
-    public void prepareEmailInfo(Course course, Student student,String orderId) {
-        EmailInfo info = EmailInfo.builder()
-                .email(student.getEmail())
-                .title(course.getTitle())
-                .price(course.getPrice())
-                .firstName(student.getFirstName())
-                .lastName(student.getLastName())
-                .orderId(orderId)
-                .build();
+    public void prepareAndSendEmailInfo(Course course, Student student, String orderId) {
+        EmailInfo info = EmailInfo
+                .EmailInfoBuilder
+                .buildEmailInfo(course,student,orderId);
         publishEmailInfo(info);
     }
 
