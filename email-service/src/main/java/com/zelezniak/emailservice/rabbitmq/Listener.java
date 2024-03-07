@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-@Slf4j
 public class Listener {
 
     private final EmailService emailService;
@@ -20,7 +19,6 @@ public class Listener {
 
     @RabbitListener(queues = QUEUE_NAME)
     public void getEmailInfoFromQueue(EmailInfo emailInfo) {
-        log.info("EMAIL INFO IIIIIIIIIIIIIIIIIIIIIIIIIIIII     "+emailInfo);
         if (emailInfo == null) { throw new EmailException(CustomErrors.EMAIL_INFO_NOT_FOUND);}
         emailService.prepareEmail(emailInfo);
     }
