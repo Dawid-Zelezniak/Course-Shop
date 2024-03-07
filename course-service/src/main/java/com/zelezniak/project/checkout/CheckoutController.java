@@ -18,7 +18,6 @@ import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
 
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class CheckoutController {
 
