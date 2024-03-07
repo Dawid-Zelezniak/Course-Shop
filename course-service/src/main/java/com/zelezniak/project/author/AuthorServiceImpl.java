@@ -31,6 +31,10 @@ public class AuthorServiceImpl implements AuthorService {
     if(author!=null) {authorRepository.save(author);}
     }
 
+    public boolean existsByEmail(String email) {
+        return authorRepository.existsByEmail(email);
+    }
+
     public CourseAuthor getById(Long authorId) {
         return authorRepository.findByAuthorId(authorId)
                 .orElseThrow(() -> new CourseException(CustomErrors.USER_NOT_FOUND));
