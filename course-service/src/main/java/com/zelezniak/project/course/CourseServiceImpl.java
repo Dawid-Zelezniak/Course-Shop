@@ -7,7 +7,7 @@ import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CustomErrors;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.order.OrderService;
-import com.zelezniak.project.rabbitmq.EmailInfoSender;
+import com.zelezniak.project.rabbitmq.EmailPublisherService;
 import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,13 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final AuthorService authorService;
     private final StudentService studentService;
     private final OrderService orderService;
-    private final EmailInfoSender emailInfoPublisher;
+    private final EmailPublisherService emailInfoPublisher;
 
     @Transactional
     public void addCourse(Course course, Long authorId) {
@@ -83,7 +82,7 @@ public class CourseServiceImpl implements CourseService {
 
     private void addCourseAndOrder(Course course, CourseAuthor author) {
         Order order = orderService.createOrder(course, author);
-        emailInfoPublisher.prepareEmailInfo(course, author,order.getOrderId());
+        emailInfoPublisher.prepareAndSendEmailInfo(course, author,order.getOrderId());
         course.addOrder(order);
         author.addOrder(order);
         addCourseForAuthor(author, course);
@@ -91,7 +90,7 @@ public class CourseServiceImpl implements CourseService {
 
     private void addCourseAndOrder(Course course, Student student) {
         Order order = orderService.createOrder(course, student);
-        emailInfoPublisher.prepareEmailInfo(course,student,order.getOrderId());
+        emailInfoPublisher.prepareAndSendEmailInfo(course,student,order.getOrderId());
         course.addOrder(order);
         student.addOrder(order);
         addCourseForStudent(student, course);
