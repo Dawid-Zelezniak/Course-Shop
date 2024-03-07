@@ -22,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "courses")
 public class Course {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
