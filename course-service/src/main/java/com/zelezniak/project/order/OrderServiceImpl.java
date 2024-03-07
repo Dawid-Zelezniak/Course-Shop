@@ -15,33 +15,20 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
-    @Override
     public Order createOrder(Course course, CourseAuthor author) {
-        Order order = Order.builder()
-                .orderId(generateOrderId())
-                .totalPrice(course.getPrice())
-                .orderedCourse(course)
-                .dateCreated(LocalDateTime.now())
-                .build();
-        order.addUser(author);
+        Order order = Order
+                .OrderBuilder
+                .buildOrder(course,author);
         orderRepository.save(order);
         return order;
     }
 
     @Override
     public Order createOrder(Course course, Student student) {
-        Order order = Order.builder()
-                .orderId(generateOrderId())
-                .totalPrice(course.getPrice())
-                .orderedCourse(course)
-                .dateCreated(LocalDateTime.now())
-                .build();
-        order.addUser(student);
+        Order order = Order
+                .OrderBuilder
+                .buildOrder(course,student);
         orderRepository.save(order);
         return order;
-    }
-
-    private String generateOrderId() {
-        return UUID.randomUUID().toString();
     }
 }
