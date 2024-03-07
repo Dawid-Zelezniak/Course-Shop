@@ -24,4 +24,8 @@ public class StudentServiceImpl implements StudentService {
         if(student !=null){studentRepository.save(student);}
     }
 
+    public boolean existsByEmail(String email) {
+        return studentRepository.existsByEmail(email);
+    }
+
 }
