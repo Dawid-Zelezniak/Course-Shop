@@ -3,7 +3,6 @@ package com.zelezniak.project.course;
 
 import com.zelezniak.project.author.AuthorService;
 import com.zelezniak.project.author.CourseAuthor;
-import com.zelezniak.project.checkout.CheckoutService;
 import com.zelezniak.project.controller.FormValidationManager;
 import com.zelezniak.project.dto.PaymentInfo;
 import com.zelezniak.project.exception.CourseException;
@@ -15,7 +14,6 @@ import com.zelezniak.project.student.StudentService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,14 +29,12 @@ import java.util.Set;
 import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class CourseController {
 
     private final HttpSession httpSession;
     private final CourseService courseService;
     private final AuthorService authorService;
-    private final CheckoutService checkoutService;
     private final StudentService studentService;
 
     @GetMapping("/courses")
@@ -53,7 +49,8 @@ public class CourseController {
     public ModelAndView prepareOrder(@RequestParam Long courseId, Principal principal) {
         ModelAndView modelAndView = new ModelAndView(PAYMENT_INFORMATION_VIEW);
         Course courseToBuy = courseService.findById(courseId);
-        PaymentInfo paymentInfo = checkoutService.createPaymentInfo(courseToBuy, principal.getName());
+        PaymentInfo paymentInfo = PaymentInfo.PaymentInfoBuilder
+                .buildPaymentInfo(courseToBuy, principal.getName());
         modelAndView.addObject(PAYMENT_INFO_ATTRIBUTE, paymentInfo);
         return modelAndView;
     }
