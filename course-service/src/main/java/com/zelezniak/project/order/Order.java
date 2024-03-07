@@ -11,6 +11,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -61,4 +62,32 @@ public class Order {
         }
     }
 
+    public static final class OrderBuilder {
+
+        public static Order buildOrder(Course course, CourseAuthor author) {
+            Order order = Order.builder()
+                    .orderId(generateOrderId())
+                    .totalPrice(course.getPrice())
+                    .orderedCourse(course)
+                    .dateCreated(LocalDateTime.now())
+                    .build();
+            order.addUser(author);
+            return order;
+        }
+
+        public static Order buildOrder(Course course, Student student) {
+            Order order = Order.builder()
+                    .orderId(generateOrderId())
+                    .totalPrice(course.getPrice())
+                    .orderedCourse(course)
+                    .dateCreated(LocalDateTime.now())
+                    .build();
+            order.addUser(student);
+            return order;
+        }
+
+        private static String generateOrderId() {
+            return UUID.randomUUID().toString();
+        }
+    }
 }
