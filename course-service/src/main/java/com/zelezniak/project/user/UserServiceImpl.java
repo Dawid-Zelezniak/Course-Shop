@@ -1,16 +1,15 @@
 package com.zelezniak.project.user;
 
 
+import com.zelezniak.project.author.AuthorService;
 import com.zelezniak.project.author.CourseAuthor;
-import com.zelezniak.project.author.CourseAuthorRepository;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CustomErrors;
 import com.zelezniak.project.role.Role;
-import com.zelezniak.project.role.RoleRepository;
+import com.zelezniak.project.role.RoleService;
 import com.zelezniak.project.student.Student;
-import com.zelezniak.project.student.StudentRepository;
+import com.zelezniak.project.student.StudentService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,13 +20,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final StudentRepository studentRepository;
-    private final CourseAuthorRepository authorRepository;
-    private final RoleRepository roleRepository;
+    private final StudentService studentService;
+    private final AuthorService authorService;
+    private final RoleService roleService;
     private final BCryptPasswordEncoder passwordEncoder;
 
     private static final String ROLE_STUDENT = "ROLE_STUDENT";
@@ -40,9 +38,9 @@ public class UserServiceImpl implements UserService {
             validateIfUserExistsAndEmailFormat(user.getEmail());
             String role = user.getRole();
             if (role.equals(ROLE_STUDENT)) {
-                studentRepository.save(newStudent(user));
+                studentService.saveStudent(newStudent(user));
             } else if (role.equals(ROLE_TEACHER)) {
-                authorRepository.save(newAuthor(user));
+                authorService.saveAuthor(newAuthor(user));
             }
         }
     }
@@ -50,7 +48,7 @@ public class UserServiceImpl implements UserService {
     private Student newStudent(UserData user) {
         Student studentToSave = setStudentData(user);
         Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByName(ROLE_STUDENT));
+        roles.add(roleService.findByName(ROLE_STUDENT));
         studentToSave.setRoles(roles);
         return studentToSave;
     }
@@ -58,35 +56,29 @@ public class UserServiceImpl implements UserService {
     private CourseAuthor newAuthor(UserData user) {
         CourseAuthor authorToSave = setAuthorData(user);
         Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByName(ROLE_STUDENT));
-        roles.add(roleRepository.findByName(ROLE_TEACHER));
+        roles.add(roleService.findByName(ROLE_STUDENT));
+        roles.add(roleService.findByName(ROLE_TEACHER));
         authorToSave.setRoles(roles);
         return authorToSave;
     }
 
     private CourseAuthor setAuthorData(UserData user) {
-        return CourseAuthor.builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .password(encodePassword(user.getPassword()))
-                .build();
+        return CourseAuthor
+                .CourseAuthorBuilder
+                .buildAuthor(user,passwordEncoder);
     }
 
     private Student setStudentData(UserData user) {
-        return Student.builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .password(encodePassword(user.getPassword()))
-                .build();
+        return Student
+                .StudentBuilder
+                .buildStudent(user,passwordEncoder);
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        CourseAuthor author = authorRepository.findByEmail(username);
+        CourseAuthor author = authorService.findByEmail(username);
         if (author != null) {return UserDetailsBuilder.buildUserDetails(author);}
         else {
-            Student student = studentRepository.findByEmail(username);
+            Student student = studentService.findByEmail(username);
             if (student != null) {return UserDetailsBuilder.buildUserDetails(student);}
             else {
                 throw new UsernameNotFoundException("User not found with username: " + username);
@@ -94,13 +86,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private String encodePassword(String password) {
-        return this.passwordEncoder.encode(password);
-    }
-
     private void validateIfUserExistsAndEmailFormat(String email) {
         if (email.matches(EMAIL_PATTERN)) {
-            if (studentRepository.existsByEmail(email) || authorRepository.existsByEmail(email)) {
+            if (studentService.existsByEmail(email) || authorService.existsByEmail(email)) {
                 throw new CourseException(CustomErrors.USER_ALREADY_EXISTS);}
         } else {throw new CourseException(CustomErrors.EMAIL_IN_WRONG_FORMAT);}
     }
