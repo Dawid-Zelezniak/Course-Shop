@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class RegistrationController {
 
