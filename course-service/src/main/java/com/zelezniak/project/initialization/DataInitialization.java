@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-final class DataInitializationService {
+final class DataInitialization {
 
     private final RoleRepository roleRepository;
     private final CourseAuthorRepository authorRepository;
