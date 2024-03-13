@@ -1,4 +1,4 @@
-package com.zelezniak.project.controller;
+package com.zelezniak.project.common;
 
 import com.zelezniak.project.exception.ErrorInfo;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.zelezniak.project.controller.AttributesAndTemplatesNames.ERROR_INFO_ATTRIBUTE;
+import static com.zelezniak.project.common.AttributesAndTemplatesNames.ERROR_INFO_ATTRIBUTE;
 
 public class FormErrorHandler {
 
