@@ -1,4 +1,4 @@
-package com.zelezniak.project.controller;
+package com.zelezniak.project.access;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

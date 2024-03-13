@@ -1,12 +1,12 @@
-package com.zelezniak.project.controller;
+package com.zelezniak.project.access;
 
+import com.zelezniak.project.controller.FormErrorHandler;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
 import com.zelezniak.project.user.UserData;
 import com.zelezniak.project.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,15 +33,16 @@ public class RegistrationController {
     public ModelAndView processRegistrationForm(@Valid @ModelAttribute(WEB_USER_ATTRIBUTE) UserData user,
                                                 BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView(REGISTRATION_VIEW);
-        ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
-        if (errors != null) {return errors;} else {
+        ModelAndView errors = FormErrorHandler.getErrors(bindingResult, modelAndView);
+        if (errors != null) {return errors;}
+        else {
             try {
-                this.userService.createNewUser(user);
+                userService.createNewUser(user);
                 modelAndView.addObject(INFO_ATTRIBUTE, "User created successfully");
                 return modelAndView;
-            } catch (CourseException var6) {
+            } catch (CourseException ex) {
                 return modelAndView.addObject(
-                        ERROR_INFO_ATTRIBUTE, new ErrorInfo(var6.getCourseError().getMessage()));
+                        ERROR_INFO_ATTRIBUTE, new ErrorInfo(ex.getCourseError().getMessage()));
             }
         }
     }
