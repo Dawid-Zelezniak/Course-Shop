@@ -3,7 +3,7 @@ package com.zelezniak.project.course;
 
 import com.zelezniak.project.author.AuthorService;
 import com.zelezniak.project.author.CourseAuthor;
-import com.zelezniak.project.controller.FormValidationManager;
+import com.zelezniak.project.common.FormErrorHandler;
 import com.zelezniak.project.dto.PaymentInfo;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
@@ -26,7 +26,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
-import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
+import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -70,7 +70,7 @@ public class CourseController {
                                    BindingResult bindingResult) {
         Long authorId = (Long)httpSession.getAttribute(AUTHOR_ID_ATTRIBUTE);
         ModelAndView modelAndView = new ModelAndView(ADD_COURSES_VIEW);
-        ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
+        ModelAndView errors = FormErrorHandler.getErrors(bindingResult, modelAndView);
         if (errors != null) {return errors;}
         else {
             try {
@@ -113,7 +113,7 @@ public class CourseController {
     @PostMapping("/update/courses/")
     public ModelAndView updateCourse(@RequestParam Long courseId, @ModelAttribute(COURSE_ATTRIBUTE) @Valid Course course, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView(UPDATE_COURSE_VIEW);
-        ModelAndView errors = FormValidationManager.getErrors(bindingResult, modelAndView);
+        ModelAndView errors = FormErrorHandler.getErrors(bindingResult, modelAndView);
         if (errors != null) {return errors;}
         else {
             try {
