@@ -1,4 +1,4 @@
-package com.zelezniak.project.controller;
+package com.zelezniak.project.common;
 
 public interface AttributesAndTemplatesNames {
 
