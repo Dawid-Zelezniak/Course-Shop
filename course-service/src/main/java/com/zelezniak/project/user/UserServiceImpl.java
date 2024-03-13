@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private Student newStudent(UserData user) {
-        Student studentToSave = setStudentData(user);
+        Student studentToSave = buildStudent(user);
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.findByName(ROLE_STUDENT));
         studentToSave.setRoles(roles);
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private CourseAuthor newAuthor(UserData user) {
-        CourseAuthor authorToSave = setAuthorData(user);
+        CourseAuthor authorToSave = buildAuthor(user);
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.findByName(ROLE_STUDENT));
         roles.add(roleService.findByName(ROLE_TEACHER));
@@ -62,26 +62,27 @@ public class UserServiceImpl implements UserService {
         return authorToSave;
     }
 
-    private CourseAuthor setAuthorData(UserData user) {
+    private CourseAuthor buildAuthor(UserData user) {
         return CourseAuthor
                 .CourseAuthorBuilder
                 .buildAuthor(user,passwordEncoder);
     }
 
-    private Student setStudentData(UserData user) {
+    private Student buildStudent(UserData user) {
         return Student
                 .StudentBuilder
                 .buildStudent(user,passwordEncoder);
     }
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        CourseAuthor author = authorService.findByEmail(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        CourseAuthor author = authorService.findByEmail(email);
+
         if (author != null) {return UserDetailsBuilder.buildUserDetails(author);}
         else {
-            Student student = studentService.findByEmail(username);
+            Student student = studentService.findByEmail(email);
             if (student != null) {return UserDetailsBuilder.buildUserDetails(student);}
             else {
-                throw new UsernameNotFoundException("User not found with username: " + username);
+                throw new UsernameNotFoundException("User not found with email: " + email);
             }
         }
     }
