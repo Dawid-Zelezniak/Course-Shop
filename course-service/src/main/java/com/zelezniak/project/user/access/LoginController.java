@@ -1,10 +1,10 @@
-package com.zelezniak.project.access;
+package com.zelezniak.project.user.access;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import static com.zelezniak.project.controller.AttributesAndTemplatesNames.ACCESS_DENIED_VIEW;
-import static com.zelezniak.project.controller.AttributesAndTemplatesNames.LOGIN_VIEW;
+import static com.zelezniak.project.common.AttributesAndTemplatesNames.ACCESS_DENIED_VIEW;
+import static com.zelezniak.project.common.AttributesAndTemplatesNames.LOGIN_VIEW;
 
 @Controller
 public class LoginController {
