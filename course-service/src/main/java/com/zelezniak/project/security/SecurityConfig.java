@@ -51,8 +51,7 @@ public class SecurityConfig {
                             .requestMatchers("/add/**").hasRole("TEACHER")
                             .requestMatchers("/save/**").hasRole("TEACHER")
                             .requestMatchers("/author/**").hasRole("TEACHER")
-                            .requestMatchers("/all/students/**").hasRole("ADMIN")
-                            .requestMatchers("/all/authors/**").hasRole("ADMIN")
+                            .requestMatchers("/all/**").hasRole("ADMIN")
                             .requestMatchers("/checkout/**").hasRole("STUDENT")
                             .requestMatchers("/purchased/courses/**").hasRole("STUDENT")
                             .anyRequest().authenticated();
