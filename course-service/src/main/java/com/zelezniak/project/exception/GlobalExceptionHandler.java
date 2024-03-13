@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final HttpStatus DEFAULT_ERROR_STATUS=HttpStatus.INTERNAL_SERVER_ERROR;
+
     @ExceptionHandler(CourseException.class)
     public ResponseEntity<ErrorInfo> courseExceptionHandler(CourseException exception) {
 
-        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus httpStatus = DEFAULT_ERROR_STATUS;
         switch (exception.getCourseError()) {
             case COURSE_NOT_FOUND,
                     USER_NOT_FOUND -> httpStatus = HttpStatus.NOT_FOUND;
@@ -22,4 +24,10 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.status(httpStatus).body(new ErrorInfo(exception.getCourseError().getMessage()));
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorInfo> handleException(Exception exception){
+        return ResponseEntity.status(DEFAULT_ERROR_STATUS).body(new ErrorInfo(exception.getMessage()));
+    }
+
 }
