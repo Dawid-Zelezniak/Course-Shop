@@ -1,11 +1,12 @@
-package com.zelezniak.project.access;
+package com.zelezniak.project.user.access;
 
-import com.zelezniak.project.controller.FormErrorHandler;
+import com.zelezniak.project.common.FormErrorHandler;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
 import com.zelezniak.project.user.UserData;
 import com.zelezniak.project.user.UserService;
 import jakarta.validation.Valid;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.zelezniak.project.controller.AttributesAndTemplatesNames.*;
+import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
