@@ -11,7 +11,6 @@ import com.zelezniak.project.rabbitmq.EmailPublisherService;
 import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
