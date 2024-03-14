@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService {
+final class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
