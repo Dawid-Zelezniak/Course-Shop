@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CourseException extends RuntimeException {
+public final class CourseException extends RuntimeException {
 
     private CustomErrors courseError;
 }
