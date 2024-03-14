@@ -22,7 +22,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @Table(name = "course_authors")
-public class CourseAuthor {
+public final class CourseAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
