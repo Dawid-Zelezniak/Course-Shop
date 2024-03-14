@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class StudentServiceImpl implements StudentService {
+final class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
