@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class Listener {
+final class Listener {
 
     private final EmailService emailService;
 
