@@ -21,7 +21,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "courses")
-public class Course {
+public final class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
