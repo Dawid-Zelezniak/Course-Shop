@@ -7,7 +7,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.ACCESS_DE
 import static com.zelezniak.project.common.AttributesAndTemplatesNames.LOGIN_VIEW;
 
 @Controller
-public class LoginController {
+final class LoginController {
 
     @GetMapping({"/login/page"})
     public String loginPage() {
