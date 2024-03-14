@@ -16,7 +16,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public final class UserController {
 
     private final StudentService studentService;
     private final AuthorService authorService;
