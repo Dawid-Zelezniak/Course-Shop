@@ -18,7 +18,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
-public class CheckoutController {
+class CheckoutController {
 
     private final CourseService courseService;
 
