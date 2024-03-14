@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class CourseServiceImpl implements CourseService {
+class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
     private final AuthorService authorService;
