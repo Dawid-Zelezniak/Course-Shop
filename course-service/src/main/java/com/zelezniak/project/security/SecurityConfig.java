@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
-public class SecurityConfig {
+class SecurityConfig {
 
     @Value("${stripe.api.secretKey}")
     private String secretKey;
