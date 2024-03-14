@@ -30,7 +30,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
-public class CourseController {
+public final class CourseController {
 
     private final HttpSession httpSession;
     private final CourseService courseService;
