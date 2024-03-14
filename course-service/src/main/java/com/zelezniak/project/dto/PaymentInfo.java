@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PaymentInfo {
+public final class PaymentInfo {
 
     private final Double amount;
     private final String email;
