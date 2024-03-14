@@ -20,7 +20,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
-public class RegistrationController {
+final class RegistrationController {
 
     private final UserService userService;
 
