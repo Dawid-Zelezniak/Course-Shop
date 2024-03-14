@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+final class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailException.class)
     public ResponseEntity<ErrorInfo> courseExceptionHandler(EmailException exception) {
