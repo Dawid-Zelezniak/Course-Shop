@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public final class GlobalExceptionHandler {
 
     private static final HttpStatus DEFAULT_ERROR_STATUS=HttpStatus.INTERNAL_SERVER_ERROR;
 
