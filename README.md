@@ -12,5 +12,6 @@ Technologies I used :
 * RabbitMQ 
 * Stripe 
 * MYSQL 
-* Thymeleaf 
+* Thymeleaf
+  
 VIDEO PRESENTATION ~ 10 min [PL] : https://youtu.be/923i1-52OQs
