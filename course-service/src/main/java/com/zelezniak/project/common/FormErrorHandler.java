@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static com.zelezniak.project.common.AttributesAndTemplatesNames.ERROR_INFO_ATTRIBUTE;
 
-public class FormErrorHandler {
+public final class FormErrorHandler {
 
     public static ModelAndView getErrors(BindingResult bindingResult, ModelAndView modelAndView) {
         if (bindingResult.hasErrors()) {
