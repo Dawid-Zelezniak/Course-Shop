@@ -31,11 +31,9 @@
         <div class="form-group">
             <label for="category">Category:</label>
             <select class="form-control col-4 mb-2" id="category" th:field="*{category}" required>
-                <option value="IT">IT</option>
-                <option value="Programming">Programming</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Music">Music</option>
+                <option th:each="category : ${categories}"
+                        th:text="${category}"
+                        th:value="${category}">IT</option>
             </select>
         </div>
 
