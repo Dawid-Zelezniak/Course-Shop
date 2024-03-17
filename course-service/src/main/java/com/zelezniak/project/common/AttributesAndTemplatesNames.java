@@ -36,4 +36,5 @@ public interface AttributesAndTemplatesNames {
     String AMOUNT_ATTRIBUTE = "amount";
     String EMAIL_ATTRIBUTE = "email";
     String PRODUCT_NAME_ATTRIBUTE = "productName";
+    String CATEGORIES_ATTRIBUTE = "categories";
 }
