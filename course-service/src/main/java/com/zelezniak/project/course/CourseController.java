@@ -14,6 +14,7 @@ import com.zelezniak.project.student.StudentService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,8 @@ public final class CourseController {
     private final CourseService courseService;
     private final AuthorService authorService;
     private final StudentService studentService;
+    @Value("${categories}")
+    private List<String>categories;
 
     @GetMapping("/courses")
     public ModelAndView availableCourses(Principal principal) {
@@ -62,6 +65,7 @@ public final class CourseController {
         CourseAuthor authorFromDb = authorService.findByEmail(email);
         httpSession.setAttribute(AUTHOR_ID_ATTRIBUTE,authorFromDb.getAuthorId());
         modelAndView.addObject(COURSE_ATTRIBUTE, new Course());
+        modelAndView.addObject(CATEGORIES_ATTRIBUTE,categories);
         return modelAndView;
     }
 
