@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student-Details</title>
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<div class="container">
+    <h2>
+        STUDENT: <span th:text="${student.firstName}+' '+${student.lastName}"></span>
+    </h2>
+    <hr>
+
+    <h1>BOUGHT COURSES</h1>
+    <!-- Courses Table -->
+    <table class="table table-bordered table-striped" id="bought-courses-table">
+        <thead>
+        <tr>
+            <td>Course title</td>
+            <td>Price $</td>
+            <td>Category</td>
+            <td>Created At</td>
+            <td>Participants</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${boughtCourses}">
+            <td th:text="${course.title}"></td>
+            <td th:text="${course.price+'$'}"></td>
+            <td th:text="${course.category}"></td>
+            <td th:text="${#temporals.format(course.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${course.countTotalParticipants()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <h1>AUTHOR ORDERS</h1>
+    <!-- Courses Table -->
+    <table class="table table-bordered table-striped" id="author-orders-table">
+        <thead>
+        <tr>
+            <td>Order ID</td>
+            <td>Price $</td>
+            <td>Created At</td>
+            <td>Ordered Course</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderId}"></td>
+            <td th:text="${order.totalPrice+'$'}"></td>
+            <td th:text="${#temporals.format(order.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${order.orderedCourse.getTitle()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/courses}" class="btn btn-info">Back to courses</a>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#bought-courses-table").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': false
+            }]
+        });
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $("#author-orders-table").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': false
+            }]
+        });
+    })
+</script>
+</body>
+
+</html>
