@@ -11,4 +11,6 @@ public interface StudentService {
     void saveStudent(Student student);
 
     boolean existsByEmail(String email);
+
+    Student findById(Long id);
 }
