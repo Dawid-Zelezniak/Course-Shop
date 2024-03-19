@@ -97,15 +97,6 @@ public final class CourseController {
         return modelAndView;
     }
 
-    @GetMapping("/author/courses")
-    public ModelAndView coursesCreatedByAuthor(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView(CREATED_BY_AUTHOR_VIEW);
-        String authorEmail = principal.getName();
-        Set<Course> createdByAuthor = authorService.findByEmail(authorEmail).getCreatedByAuthor();
-        modelAndView.addObject(COURSES_ATTRIBUTE, createdByAuthor);
-        return modelAndView;
-    }
-
     @GetMapping("/update/courses")
     public ModelAndView courseUpdateForm(@RequestParam Long courseId) {
         ModelAndView modelAndView = new ModelAndView(UPDATE_COURSE_VIEW);
@@ -140,16 +131,12 @@ public final class CourseController {
         return modelAndView;
     }
 
-    @GetMapping({"/user/orders"})
-    public ModelAndView userOrders(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView(USER_ORDERS_VIEW);
-        String email = principal.getName();
-        CourseAuthor author = authorService.findByEmail(email);
-        Student student = studentService.findByEmail(email);
-        Set<Order> orders = author != null ? author.getAuthorOrders() : student.getStudentOrders();
-        double totalPrice = OrderService.totalOrdersPrice(orders);
-        modelAndView.addObject(TOTAL_PRICE_ATTRIBUTE, totalPrice);
-        modelAndView.addObject(ORDERS_ATTRIBUTE, orders);
+    @GetMapping("/author/courses")
+    public ModelAndView coursesCreatedByAuthor(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView(CREATED_BY_AUTHOR_VIEW);
+        String authorEmail = principal.getName();
+        Set<Course> createdByAuthor = authorService.findByEmail(authorEmail).getCreatedByAuthor();
+        modelAndView.addObject(COURSES_ATTRIBUTE, createdByAuthor);
         return modelAndView;
     }
 }
