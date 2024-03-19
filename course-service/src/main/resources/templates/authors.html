@@ -22,6 +22,7 @@
             <th>Last Name</th>
             <th>E-mail</th>
             <th>Created At</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,9 @@
             <td th:text="${author.lastName}"></td>
             <td th:text="${author.email}"></td>
             <td th:text="${#temporals.format(author.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+               <a th:href="@{/author/details(authorId=${author.authorId})}" class="btn btn-info">details</a>
+            </td>
         </tr>
         </tbody>
     </table>
