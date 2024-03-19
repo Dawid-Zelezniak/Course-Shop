@@ -111,7 +111,7 @@
         <tbody>
         <tr th:each="course : ${courses}">
             <td th:text="${course.title}"></td>
-            <td th:text="${course.price}"></td>
+            <td th:text="${course.price+'$'}"></td>
             <td>
                 <a th:href="@{/courses/details(courseId=${course.courseId})}" class="btn btn-info">Details</a>
                 <a th:href="@{/courses/payment/info(courseId=${course.courseId})}" class="btn btn-info">Buy</a>
