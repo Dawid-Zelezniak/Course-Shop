@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,8 @@ class UserDetailsBuilder {
     }
 
     public static UserDetails buildUserDetails(Student student) {
-        Collection<SimpleGrantedAuthority> authorities = student.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
+        Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(student.getRole().getName()));
         return new User(student.getEmail(), student.getPassword(), authorities);
     }
 }
