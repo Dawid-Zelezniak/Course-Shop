@@ -50,11 +50,8 @@ public final class Student {
     @ManyToMany(mappedBy = "students")
     private Set<Order> studentOrders;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "students_roles",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @ManyToOne
+    private Role role;
 
     public void addOrder(Order order) {
         if (order != null) {
