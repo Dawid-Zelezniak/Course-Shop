@@ -47,9 +47,8 @@ class UserServiceImpl implements UserService {
 
     private Student newStudent(UserData user) {
         Student studentToSave = buildStudent(user);
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.findByName(ROLE_STUDENT));
-        studentToSave.setRoles(roles);
+        Role studentRole = roleService.findByName(ROLE_STUDENT);
+        studentToSave.setRole(studentRole);
         return studentToSave;
     }
 
