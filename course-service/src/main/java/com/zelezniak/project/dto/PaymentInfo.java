@@ -1,6 +1,7 @@
 package com.zelezniak.project.dto;
 
 import com.zelezniak.project.course.Course;
+import com.zelezniak.project.valueobjects.Money;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,11 +9,11 @@ import lombok.Data;
 @Builder
 public final class PaymentInfo {
 
-    private final Double amount;
-    private final String email;
-    private final String productName;
+    private Money amount;
+    private String email;
+    private String productName;
 
-    public static final class PaymentInfoBuilder{
+    public static final class PaymentInfoBuilder {
 
         public static PaymentInfo buildPaymentInfo(Course courseToBuy, String email) {
             return PaymentInfo.builder()

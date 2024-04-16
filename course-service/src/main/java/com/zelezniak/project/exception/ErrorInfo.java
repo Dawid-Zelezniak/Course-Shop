@@ -8,4 +8,11 @@ import lombok.Getter;
 public final class ErrorInfo {
 
     private String errorMessage;
+
+    @Override
+    public String toString() {
+        return "ErrorInfo{" +
+                "errorMessage='" + errorMessage + '\'' +
+                '}';
+    }
 }
