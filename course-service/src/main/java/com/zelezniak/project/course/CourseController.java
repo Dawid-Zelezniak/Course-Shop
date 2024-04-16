@@ -7,8 +7,7 @@ import com.zelezniak.project.common.FormErrorHandler;
 import com.zelezniak.project.dto.PaymentInfo;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
-import com.zelezniak.project.order.Order;
-import com.zelezniak.project.order.OrderService;
+import com.zelezniak.project.exception.UserException;
 import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
 import jakarta.servlet.http.HttpSession;
@@ -83,7 +82,8 @@ public final class CourseController {
                 return modelAndView;
             } catch (CourseException ex) {
                 return modelAndView.addObject(
-                        ERROR_INFO_ATTRIBUTE, new ErrorInfo(ex.getCourseError().getMessage()));}
+                        ERROR_INFO_ATTRIBUTE, new ErrorInfo(ex.getCourseError().getMessage()));
+            }
         }
     }
 
@@ -91,7 +91,7 @@ public final class CourseController {
     public ModelAndView courseDetails(@RequestParam Long courseId) {
         ModelAndView modelAndView = new ModelAndView(COURSE_DETAILS_VIEW);
         Course course = courseService.findById(courseId);
-        int participantsNumber = course.countTotalParticipants();
+        int participantsNumber = course.countCourseParticipants();
         modelAndView.addObject(COURSE_ATTRIBUTE, course);
         modelAndView.addObject(PARTICIPANTS_ATTRIBUTE, participantsNumber);
         return modelAndView;

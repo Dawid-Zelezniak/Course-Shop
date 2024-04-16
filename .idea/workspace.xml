@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0215c1a8-ef7c-4247-9e97-7e5a0959c45e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/course-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/CoursesApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/CoursesApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/checkout/CheckoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/checkout/CheckoutController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/course/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/course/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/java/com/zelezniak/project/user/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course-service/src/test/java/com/zelezniak/CoursesApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/course-service/src/test/java/com/zelezniak/CoursesApplication.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DawidZelezniak420&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DawidZelezniak420/Courses-App.git&quot;,
+    &quot;accountId&quot;: &quot;711346a0-3612-439c-8b16-f75f210274d1&quot;
+  }
+}</component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2dDS4LjisIRDNOLYzat2Jveha9u" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.CheckoutControllerTest.testHandleSuccessPayment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CheckoutControllerTest.testShowCard.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationControllerTest.processRegistrationFormErrorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationControllerTest.processRegistrationFormTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationControllerTest.processRegistrationFormTestForAuthor.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationControllerTest.processRegistrationFormTestForStudent.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RegistrationControllerTest.registrationFormTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.createUserTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.emailValidationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.CoursesApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.EmailServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.EurekaServerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/zelek/Desktop/COURSES-APP&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;h2&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.zelezniak.project.exception" />
+      <recent name="com.zelezniak.project.role" />
+      <recent name="com.zelezniak.emailservice.service" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\zelek\Desktop\COURSES-APP\email-service\src\main\java\com\zelezniak\emailservice" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zelezniak.emailservice" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.EmailServiceApplication">
+    <configuration name="CheckoutControllerTest.testHandleSuccessPayment" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zelezniak.checkout.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zelezniak.checkout" />
+      <option name="MAIN_CLASS_NAME" value="com.zelezniak.checkout.CheckoutControllerTest" />
+      <option name="METHOD_NAME" value="testHandleSuccessPayment" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CheckoutControllerTest.testShowCard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zelezniak.checkout.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zelezniak.checkout" />
+      <option name="MAIN_CLASS_NAME" value="com.zelezniak.checkout.CheckoutControllerTest" />
+      <option name="METHOD_NAME" value="testShowCard" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="RegistrationControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zelezniak.user.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zelezniak.user" />
+      <option name="MAIN_CLASS_NAME" value="com.zelezniak.user.RegistrationControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.createUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zelezniak.user.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zelezniak.user" />
+      <option name="MAIN_CLASS_NAME" value="com.zelezniak.user.UserServiceTest" />
+      <option name="METHOD_NAME" value="createUserTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.emailValidationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="course-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.zelezniak.user.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.zelezniak.user" />
+      <option name="MAIN_CLASS_NAME" value="com.zelezniak.user.UserServiceTest" />
+      <option name="METHOD_NAME" value="emailValidationTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoursesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="course-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zelezniak.project.CoursesApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CoursesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="course-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zelezniak.project.CoursesApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmailServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="email-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zelezniak.emailservice.EmailServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmailServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="email-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zelezniak.emailservice.EmailServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.RegistrationControllerTest" />
+        <item itemvalue="JUnit.CheckoutControllerTest.testShowCard" />
+        <item itemvalue="JUnit.CheckoutControllerTest.testHandleSuccessPayment" />
+        <item itemvalue="JUnit.UserServiceTest.createUserTest" />
+        <item itemvalue="JUnit.UserServiceTest.emailValidationTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0215c1a8-ef7c-4247-9e97-7e5a0959c45e" name="Changes" comment="" />
+      <created>1709540964961</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709540964961</updated>
+      <workItem from="1709540967354" duration="8832000" />
+      <workItem from="1709549861580" duration="18925000" />
+      <workItem from="1709622712205" duration="50927000" />
+      <workItem from="1709882844128" duration="5591000" />
+      <workItem from="1709981817540" duration="1198000" />
+      <workItem from="1710099112525" duration="2027000" />
+      <workItem from="1710237126378" duration="1381000" />
+      <workItem from="1710312598794" duration="3190000" />
+      <workItem from="1710346035165" duration="1654000" />
+      <workItem from="1710405359875" duration="11948000" />
+      <workItem from="1710490091627" duration="31000" />
+      <workItem from="1710522418233" duration="1901000" />
+      <workItem from="1710671116824" duration="5095000" />
+      <workItem from="1710773822528" duration="353000" />
+      <workItem from="1710830151876" duration="10835000" />
+      <workItem from="1710928334920" duration="1198000" />
+      <workItem from="1711003280366" duration="1822000" />
+      <workItem from="1711090423161" duration="623000" />
+      <workItem from="1711117056053" duration="4000" />
+      <workItem from="1711117078429" duration="1197000" />
+      <workItem from="1711185792513" duration="10000000" />
+      <workItem from="1711353781789" duration="1208000" />
+      <workItem from="1712497405427" duration="1880000" />
+      <workItem from="1712559378683" duration="8578000" />
+      <workItem from="1712583245446" duration="1327000" />
+      <workItem from="1712592715832" duration="9028000" />
+      <workItem from="1712642137488" duration="23064000" />
+      <workItem from="1712732017611" duration="10585000" />
+      <workItem from="1712814979424" duration="1785000" />
+      <workItem from="1712906889123" duration="589000" />
+      <workItem from="1712997808297" duration="8961000" />
+      <workItem from="1713164817913" duration="8066000" />
+      <workItem from="1713249909677" duration="21946000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

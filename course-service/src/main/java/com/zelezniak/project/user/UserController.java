@@ -44,7 +44,7 @@ public final class UserController {
     @GetMapping("/author/details")
     public ModelAndView authorDetails(@RequestParam Long authorId) {
         ModelAndView modelAndView = new ModelAndView(AUTHOR_DETAILS_VIEW);
-        CourseAuthor author = authorService.getById(authorId);
+        CourseAuthor author = authorService.findById(authorId);
         Set<Course> createdByAuthor = author.getCreatedByAuthor();
         Set<Course> boughtCourses = author.getBoughtCourses();
         Set<Order> authorOrders = author.getAuthorOrders();
