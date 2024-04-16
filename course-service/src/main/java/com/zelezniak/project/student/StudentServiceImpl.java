@@ -1,8 +1,8 @@
 package com.zelezniak.project.student;
 
 
-import com.zelezniak.project.exception.CourseException;
-import com.zelezniak.project.exception.CustomErrors;
+import com.zelezniak.project.exception.UserError;
+import com.zelezniak.project.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ final class StudentServiceImpl implements StudentService {
     }
 
     public Student findByEmail(String email) {
-        return studentRepository.findByEmail(email);
+        return studentRepository.findByUserCredentialsEmail(email);
     }
 
     public void saveStudent(Student student) {
@@ -27,13 +27,13 @@ final class StudentServiceImpl implements StudentService {
     }
 
     public boolean existsByEmail(String email) {
-        return studentRepository.existsByEmail(email);
+        return studentRepository.existsByUserCredentialsEmail(email);
     }
 
     @Override
     public Student findById(Long id) {
         return studentRepository.findById(id)
-                .orElseThrow(()-> new CourseException(CustomErrors.USER_NOT_FOUND));
+                .orElseThrow(()-> new UserException(UserError.USER_NOT_FOUND));
     }
 
 }
