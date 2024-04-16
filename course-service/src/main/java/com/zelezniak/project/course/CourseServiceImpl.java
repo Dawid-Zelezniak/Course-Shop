@@ -4,12 +4,13 @@ package com.zelezniak.project.course;
 import com.zelezniak.project.author.AuthorService;
 import com.zelezniak.project.author.CourseAuthor;
 import com.zelezniak.project.exception.CourseException;
-import com.zelezniak.project.exception.CustomErrors;
+import com.zelezniak.project.exception.CourseError;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.order.OrderService;
 import com.zelezniak.project.rabbitmq.EmailPublisherService;
 import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
+import com.zelezniak.project.valueobjects.Money;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,7 @@ class CourseServiceImpl implements CourseService {
     public void addCourse(Course course, Long authorId) {
         if (course != null) {
             checkIfCourseExists(course);
-            CourseAuthor authorFromDb = authorService.getById(authorId);
+            CourseAuthor authorFromDb = authorService.findById(authorId);
             authorFromDb.addAuthorCourse(course);
             courseRepository.save(course);
             authorService.saveAuthor(authorFromDb);
@@ -44,7 +45,7 @@ class CourseServiceImpl implements CourseService {
 
     public Course findById(Long courseId) {
         return courseRepository.findById(courseId)
-                .orElseThrow(() ->new CourseException(CustomErrors.COURSE_NOT_FOUND));
+                .orElseThrow(() ->new CourseException(CourseError.COURSE_NOT_FOUND));
     }
 
     @Transactional
@@ -53,7 +54,7 @@ class CourseServiceImpl implements CourseService {
         //check if course exists in database
         if (!courseFromDb.getTitle().equals(course.getTitle())
                 && courseRepository.existsByTitle(course.getTitle())) {
-            throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);}
+            throw new CourseException(CourseError.COURSE_ALREADY_EXISTS);}
         else {
             setCourse(courseFromDb, course);
             courseRepository.save(courseFromDb);
@@ -74,7 +75,7 @@ class CourseServiceImpl implements CourseService {
         CourseAuthor author = authorService.findByEmail(email);
         Student student = studentService.findByEmail(email);
         Course course = courseRepository.findByTitle(productName)
-                .orElseThrow(() -> new CourseException(CustomErrors.COURSE_NOT_FOUND));
+                .orElseThrow(() -> new CourseException(CourseError.COURSE_NOT_FOUND));
         if (author != null) {addCourseAndOrder(course, author);}
         else {addCourseAndOrder(course, student);}
     }
@@ -132,12 +133,12 @@ class CourseServiceImpl implements CourseService {
         courseFromDb.setTitle(course.getTitle());
         courseFromDb.setDescription(course.getDescription());
         courseFromDb.setCategory(course.getCategory());
-        courseFromDb.setPrice(course.getPrice());
+        courseFromDb.setPrice(new Money(course.getPrice().getMoney().toString()));
     }
 
     private void checkIfCourseExists(Course course) {
         if (courseRepository.existsByTitle(course.getTitle())) {
-            throw new CourseException(CustomErrors.COURSE_ALREADY_EXISTS);
+            throw new CourseException(CourseError.COURSE_ALREADY_EXISTS);
         }
     }
 }
