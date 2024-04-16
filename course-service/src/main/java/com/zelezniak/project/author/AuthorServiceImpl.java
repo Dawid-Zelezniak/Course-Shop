@@ -1,8 +1,8 @@
 package com.zelezniak.project.author;
 
 
-import com.zelezniak.project.exception.CourseException;
-import com.zelezniak.project.exception.CustomErrors;
+import com.zelezniak.project.exception.UserError;
+import com.zelezniak.project.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ final class AuthorServiceImpl implements AuthorService {
     private final CourseAuthorRepository authorRepository;
 
     public CourseAuthor findByEmail(String email) {
-        return authorRepository.findByEmail(email);
+        return authorRepository.findByUserCredentialsEmail(email);
     }
 
     public List<CourseAuthor> getAllAuthors() {
@@ -32,11 +32,11 @@ final class AuthorServiceImpl implements AuthorService {
     }
 
     public boolean existsByEmail(String email) {
-        return authorRepository.existsByEmail(email);
+        return authorRepository.existsByUserCredentialsEmail(email);
     }
 
-    public CourseAuthor getById(Long authorId) {
+    public CourseAuthor findById(Long authorId) {
         return authorRepository.findByAuthorId(authorId)
-                .orElseThrow(() -> new CourseException(CustomErrors.USER_NOT_FOUND));
+                .orElseThrow(() -> new UserException(UserError.USER_NOT_FOUND));
     }
 }
