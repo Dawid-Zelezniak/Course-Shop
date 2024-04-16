@@ -3,6 +3,7 @@ package com.zelezniak.project.user.access;
 import com.zelezniak.project.common.FormErrorHandler;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.ErrorInfo;
+import com.zelezniak.project.exception.UserException;
 import com.zelezniak.project.user.UserData;
 import com.zelezniak.project.user.UserService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
-final class RegistrationController {
+public final class RegistrationController {
 
     private final UserService userService;
 
@@ -42,8 +43,9 @@ final class RegistrationController {
                 modelAndView.addObject(INFO_ATTRIBUTE, "User created successfully");
                 return modelAndView;
             } catch (CourseException ex) {
-                return modelAndView.addObject(
-                        ERROR_INFO_ATTRIBUTE, new ErrorInfo(ex.getCourseError().getMessage()));
+                return modelAndView.addObject(ERROR_INFO_ATTRIBUTE, new ErrorInfo(ex.getCourseError().getMessage()));
+            }catch (UserException ex){
+                return modelAndView.addObject(ERROR_INFO_ATTRIBUTE, new ErrorInfo(ex.getUserError().getMessage()));
             }
         }
     }
