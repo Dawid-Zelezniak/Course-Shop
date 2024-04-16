@@ -4,6 +4,8 @@ import com.zelezniak.project.course.Course;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.role.Role;
 import com.zelezniak.project.user.UserData;
+import com.zelezniak.project.valueobjects.UserCredentials;
+import com.zelezniak.project.valueobjects.UserName;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,17 +31,11 @@ public final class CourseAuthor {
     @Column(name = "author_id")
     private Long authorId;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Embedded
+    private UserName userName;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+    @Embedded
+    private UserCredentials userCredentials;
 
     @Column(name = "date_created")
     @CreationTimestamp
@@ -65,55 +61,70 @@ public final class CourseAuthor {
 
     public void addAuthorCourse(Course course) {
         if (course != null) {
-            if (createdByAuthor == null) {createdByAuthor = new HashSet<>();}
+            if (createdByAuthor == null) {
+                createdByAuthor = new HashSet<>();
+            }
             createdByAuthor.add(course);
         }
     }
 
     public void addBoughtCourse(Course course) {
         if (course != null) {
-            if (boughtCourses == null) {boughtCourses = new HashSet<>();}
+            if (boughtCourses == null) {
+                boughtCourses = new HashSet<>();
+            }
             boughtCourses.add(course);
         }
     }
 
     public void addOrder(Order order) {
         if (order != null) {
-            if (authorOrders == null) {authorOrders = new HashSet<>();}
+            if (authorOrders == null) {
+                authorOrders = new HashSet<>();
+            }
             authorOrders.add(order);
         }
     }
 
     public String getFullName() {
-        return this.firstName + " " + this.lastName;
+        return userName.getFirstName() + " " + userName.getLastName();
     }
 
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        else if (o != null && this.getClass() == o.getClass()) {
+        if (this == o) {
+            return true;
+        } else if (o != null && this.getClass() == o.getClass()) {
             CourseAuthor that = (CourseAuthor) o;
             return Objects.equals(this.authorId, that.authorId) &&
-                    Objects.equals(this.firstName, that.firstName) &&
-                    Objects.equals(this.lastName, that.lastName) &&
-                    Objects.equals(this.email, that.email) &&
+                    Objects.equals(this.userCredentials, that.userCredentials) &&
                     Objects.equals(this.dateCreated, that.dateCreated);
-        } else {return false;}
+        } else {
+            return false;
+        }
     }
 
     public int hashCode() {
-        return Objects.hash(this.authorId, this.firstName,
-                this.lastName, this.email, this.dateCreated);
+        return Objects.hash(this.authorId, this.userCredentials, this.dateCreated);
     }
 
-    public static final class CourseAuthorBuilder{
+    public static final class CourseAuthorBuilder {
 
         public static CourseAuthor buildAuthor(UserData user, BCryptPasswordEncoder passwordEncoder) {
             return CourseAuthor.builder()
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .email(user.getEmail())
-                    .password(passwordEncoder.encode(user.getPassword()))
+                    .userName(new UserName(user.getFirstName(),user.getLastName()))
+                    .userCredentials(new UserCredentials(user.getEmail(),passwordEncoder.encode(user.getPassword())))
                     .build();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CourseAuthor{" +
+                "authorId=" + authorId +
+                ", firstName='" + userName.getFirstName() + '\'' +
+                ", lastName='" + userName.getLastName() + '\'' +
+                ", email='" + userCredentials.getEmail() + '\'' +
+                ", dateCreated=" + dateCreated +
+                '}';
     }
 }
