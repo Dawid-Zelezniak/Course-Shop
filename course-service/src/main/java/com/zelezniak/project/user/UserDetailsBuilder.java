@@ -17,12 +17,13 @@ class UserDetailsBuilder {
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
-        return new User(author.getEmail(), author.getPassword(), authorities);
+        return new User(author.getUserCredentials().getEmail(),
+                author.getUserCredentials().getPassword(), authorities);
     }
 
     public static UserDetails buildUserDetails(Student student) {
         Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(student.getRole().getName()));
-        return new User(student.getEmail(), student.getPassword(), authorities);
+        return new User(student.getUserCredentials().getEmail(), student.getUserCredentials().getPassword(), authorities);
     }
 }
