@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class OrderController {
         CourseAuthor author = authorService.findByEmail(email);
         Student student = studentService.findByEmail(email);
         Set<Order> orders = author != null ? author.getAuthorOrders() : student.getStudentOrders();
-        double totalPrice = OrderService.totalOrdersPrice(orders);
+        BigDecimal totalPrice = OrderService.totalOrdersPrice(orders);
         modelAndView.addObject(TOTAL_PRICE_ATTRIBUTE, totalPrice);
         modelAndView.addObject(ORDERS_ATTRIBUTE, orders);
         return modelAndView;
