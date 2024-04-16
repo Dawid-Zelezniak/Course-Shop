@@ -8,11 +8,7 @@ import lombok.Getter;
 public enum CustomErrors {
 
     COURSE_NOT_FOUND("Course not found!"),
-    COURSE_ALREADY_EXISTS("Such course already exists!"),
-    USER_ALREADY_EXISTS("User with such email already exists!"),
-    EMAIL_IN_WRONG_FORMAT("Your email is in wrong format!"),
-    USER_NOT_FOUND("Such user does not exists!");
-
+    COURSE_ALREADY_EXISTS("Such course already exists!");
     private final String message;
 }
     

@@ -9,7 +9,7 @@ public interface AuthorService {
 
     List<CourseAuthor> getAllAuthors();
 
-    CourseAuthor getById(Long authorId);
+    CourseAuthor findById(Long authorId);
 
     void saveAuthor(CourseAuthor author);
 
