@@ -5,17 +5,20 @@ import com.zelezniak.project.author.CourseAuthor;
 import com.zelezniak.project.role.Role;
 import com.zelezniak.project.author.CourseAuthorRepository;
 import com.zelezniak.project.role.RoleRepository;
+import com.zelezniak.project.valueobjects.UserCredentials;
+import com.zelezniak.project.valueobjects.UserName;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-final class DataInitialization {
+final class InitializationService {
 
     private final RoleRepository roleRepository;
     private final CourseAuthorRepository authorRepository;
@@ -27,24 +30,20 @@ final class DataInitialization {
             Role roleStudent = new Role("ROLE_STUDENT");
             Role roleTeacher = new Role("ROLE_TEACHER");
             Role roleAdmin = new Role("ROLE_ADMIN");
-            roleRepository.save(roleStudent);
-            roleRepository.save(roleTeacher);
-            roleRepository.save(roleAdmin);
-            initializeAdmin(roleStudent, roleAdmin, roleTeacher);
+            Set<Role> roles = new HashSet<>(List.of(roleStudent,roleTeacher,roleAdmin));
+            roleRepository.saveAll(roles);
+            initializeAdmin(roles);
         }
     }
 
-    private void initializeAdmin(Role roleStudent, Role roleAdmin, Role roleTeacher) {
-        CourseAuthor byEmail = authorRepository.findByEmail("admin@gmail.com");
+    private void initializeAdmin(Set<Role> roles) {
+        CourseAuthor byEmail = authorRepository.findByUserCredentialsEmail("admin@gmail.com");
         if (byEmail == null) {
-            CourseAuthor admin = new CourseAuthor();
-            admin.setEmail("admin@gmail.com");
-            admin.setPassword(encoder.encode("admin123"));
-            Set<Role> roles = new HashSet<>();
-            roles.add(roleStudent);
-            roles.add(roleTeacher);
-            roles.add(roleAdmin);
-            admin.setRoles(roles);
+            CourseAuthor admin = CourseAuthor.builder()
+                    .userName(new UserName("Admin", "Admin"))
+                    .userCredentials(new UserCredentials("admin@gmail.com", encoder.encode("admin123")))
+                    .roles(roles)
+                    .build();
             authorRepository.save(admin);
         }
     }
