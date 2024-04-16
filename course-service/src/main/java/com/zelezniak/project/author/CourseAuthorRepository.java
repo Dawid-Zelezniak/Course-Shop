@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface CourseAuthorRepository extends JpaRepository<CourseAuthor, Long> {
 
-    boolean existsByEmail(String email);
+    boolean existsByUserCredentialsEmail(String email);
 
-    CourseAuthor findByEmail(String email);
+    CourseAuthor findByUserCredentialsEmail(String email);
 
     Optional<CourseAuthor> findByAuthorId(Long id);
 }
