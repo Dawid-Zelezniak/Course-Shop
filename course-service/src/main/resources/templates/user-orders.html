@@ -81,7 +81,7 @@
         </thead>
         <tbody>
         <tr th:each="order : ${orders}">
-            <td th:text="${order.totalPrice}"></td>
+            <td th:text="${order.getCoursePrice}"></td>
             <td th:text="${#temporals.format(order.dateCreated, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${order.orderedCourse.title}"></td>
             <td th:text="${order.orderId}"></td>

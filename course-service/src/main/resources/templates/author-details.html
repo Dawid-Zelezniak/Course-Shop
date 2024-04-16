@@ -13,7 +13,7 @@
 <body>
 <div class="container">
     <h2>
-        AUTHOR: <span th:text="${author.firstName}+' '+${author.lastName}"></span>
+        AUTHOR: <span th:text="${author.userName.firstName}+' '+${author.userName.lastName}"></span>
     </h2>
     <hr>
     <h1>CREATED COURSES</h1>
@@ -36,7 +36,7 @@
             <td th:text="${course.description}"></td>
             <td th:text="${course.category}"></td>
             <td th:text="${#temporals.format(course.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${course.countTotalParticipants()}"></td>
+            <td th:text="${course.countCourseParticipants()}"></td>
         </tr>
         </tbody>
     </table>
@@ -59,7 +59,7 @@
             <td th:text="${course.price+'$'}"></td>
             <td th:text="${course.category}"></td>
             <td th:text="${#temporals.format(course.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${course.countTotalParticipants()}"></td>
+            <td th:text="${course.countCourseParticipants()}"></td>
         </tr>
         </tbody>
     </table>
@@ -78,7 +78,7 @@
         <tbody>
         <tr th:each="order : ${orders}">
             <td th:text="${order.orderId}"></td>
-            <td th:text="${order.totalPrice}+'$'"></td>
+            <td th:text="${order.getCoursePrice}+'$'"></td>
             <td th:text="${#temporals.format(order.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td th:text="${order.orderedCourse.getTitle()}"></td>
         </tr>

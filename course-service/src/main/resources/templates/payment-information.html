@@ -13,7 +13,7 @@
 
     <form id="payment-form" th:action="@{/checkout}" method="post">
         <div class="form-group">
-            <label for="amount">Amount:</label>
+            <label for="amount">Amount($):</label>
             <input id="amount" name="amount" readonly class="form-control col-4 mb-2" th:value="${paymentInfo.amount}">
         </div>
 

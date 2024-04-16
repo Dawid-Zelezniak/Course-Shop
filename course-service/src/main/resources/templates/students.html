@@ -28,9 +28,9 @@
         <tbody>
         <tr th:each="student : ${students}">
             <td th:text="${student.studentId}"></td>
-            <td th:text="${student.firstName}"></td>
-            <td th:text="${student.lastName}"></td>
-            <td th:text="${student.email}"></td>
+            <td th:text="${student.userName.firstName}"></td>
+            <td th:text="${student.userName.lastName}"></td>
+            <td th:text="${student.userCredentials.email}"></td>
             <td th:text="${#temporals.format(student.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td>
                 <a th:href="@{/student/details(studentId=${student.studentId})}" class="btn btn-info">details</a>

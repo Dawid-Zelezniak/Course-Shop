@@ -28,9 +28,9 @@
         <tbody>
         <tr th:each="author : ${authors}">
             <td th:text="${author.authorId}"></td>
-            <td th:text="${author.firstName}"></td>
-            <td th:text="${author.lastName}"></td>
-            <td th:text="${author.email}"></td>
+            <td th:text="${author.userName.firstName}"></td>
+            <td th:text="${author.userName.lastName}"></td>
+            <td th:text="${author.userCredentials.email}"></td>
             <td th:text="${#temporals.format(author.dateCreated,'yyyy-MM-dd HH:mm:ss')}"></td>
             <td>
                <a th:href="@{/author/details(authorId=${author.authorId})}" class="btn btn-info">details</a>
