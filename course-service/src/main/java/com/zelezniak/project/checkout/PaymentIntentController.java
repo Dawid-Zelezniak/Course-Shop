@@ -19,7 +19,7 @@ final class PaymentIntentController {
             throws StripeException {
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
-                        .setAmount( Math.round((paymentInfo.getAmount() * 100L)))
+                        .setAmount(paymentInfo.getAmount().convertToCents())
                         .putMetadata("productName",
                                 paymentInfo.getProductName())
                         .setCurrency("usd")

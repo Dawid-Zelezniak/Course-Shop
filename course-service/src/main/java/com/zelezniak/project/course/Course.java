@@ -3,8 +3,8 @@ package com.zelezniak.project.course;
 import com.zelezniak.project.author.CourseAuthor;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.student.Student;
+import com.zelezniak.project.valueobjects.Money;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +28,8 @@ public final class Course {
     @Column(name = "course_id")
     private Long courseId;
 
-    @Column(name = "price")
-    @Min(value = 0L, message = "Price can not be lower than 0")
-    private Double price;
+    @Embedded
+    private Money price;
 
     @NotBlank(message = "Title can not be blank")
     @Column(name = "title", unique = true)
@@ -93,28 +92,25 @@ public final class Course {
         }
     }
 
-
-    public int countTotalParticipants() {
+    public int countCourseParticipants() {
         return enrolledAuthors.size() + enrolledStudents.size();
     }
 
+    @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        else if (o != null && this.getClass() == o.getClass()) {
-            Course course = (Course) o;
-            return Double.compare(course.price, this.price) == 0 &&
-                    Objects.equals(this.courseId, course.courseId) &&
-                    Objects.equals(this.title, course.title) &&
-                    Objects.equals(this.description, course.description) &&
-                    Objects.equals(this.courseAuthor, course.courseAuthor) &&
-                    Objects.equals(this.category, course.category) &&
-                    Objects.equals(this.dateCreated, course.dateCreated);
-        } else {return false;}
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(courseId, course.courseId) &&
+                Objects.equals(price, course.price) && Objects.equals(title, course.title) &&
+                Objects.equals(description, course.description) && Objects.equals(courseAuthor, course.courseAuthor) &&
+                Objects.equals(category, course.category) && Objects.equals(dateCreated, course.dateCreated);
     }
 
     public int hashCode() {
         return Objects.hash(this.courseId,
-                this.price, this.title,
+                this.price,
+                this.title,
                 this.description,
                 this.courseAuthor,
                 this.category,
