@@ -8,9 +8,8 @@ import java.io.Serializable;
 public class EmailInfo implements Serializable {
 
     private String email;
-    private String firstName;
-    private String lastName;
+    private UserName userName;
     private String title;
-    private Double price;
+    private Money price;
     private String orderId;
 }
