@@ -4,6 +4,8 @@ import com.zelezniak.project.course.Course;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.role.Role;
 import com.zelezniak.project.user.UserData;
+import com.zelezniak.project.valueobjects.UserCredentials;
+import com.zelezniak.project.valueobjects.UserName;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,17 +30,11 @@ public final class Student {
     @Column(name = "student_id")
     private Long studentId;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Embedded
+    private UserName userName;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
-    @Column(name = "password")
-    private String password;
+    @Embedded
+    private UserCredentials userCredentials;
 
     @Column(name = "date_created")
     @CreationTimestamp
@@ -55,14 +51,18 @@ public final class Student {
 
     public void addOrder(Order order) {
         if (order != null) {
-            if (studentOrders == null) {studentOrders = new HashSet<>();}
+            if (studentOrders == null) {
+                studentOrders = new HashSet<>();
+            }
             studentOrders.add(order);
         }
     }
 
     public void addBoughtCourse(Course course) {
         if (course != null) {
-            if (boughtCourses == null) {boughtCourses = new HashSet<>();}
+            if (boughtCourses == null) {
+                boughtCourses = new HashSet<>();
+            }
             boughtCourses.add(course);
         }
     }
@@ -71,11 +71,21 @@ public final class Student {
 
         public static Student buildStudent(UserData user, BCryptPasswordEncoder passwordEncoder) {
             return Student.builder()
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .email(user.getEmail())
-                    .password(passwordEncoder.encode(user.getPassword()))
+                    .userName(new UserName(user.getFirstName(), user.getLastName()))
+                    .userCredentials(new UserCredentials(user.getEmail(), passwordEncoder.encode(user.getPassword())))
                     .build();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentId=" + studentId +
+                ", firstName='" + userName.getFirstName() + '\'' +
+                ", lastName='" + userName.getLastName() + '\'' +
+                ", email='" + userCredentials.getEmail() + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", role=" + role +
+                '}';
     }
 }
