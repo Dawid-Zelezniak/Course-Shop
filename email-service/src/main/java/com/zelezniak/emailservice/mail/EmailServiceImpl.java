@@ -38,11 +38,11 @@ class EmailServiceImpl implements EmailService {
     }
 
     private String buildEmailContent(EmailInfo emailInfo) {
-        return "Dear " + emailInfo.getFirstName() + " " + emailInfo.getLastName() + "\n" +
+        return "Dear " + emailInfo.getUserName().getFirstName() + " " + emailInfo.getUserName().getLastName() + "\n" +
                 "Thank you for purchasing the course " + emailInfo.getTitle() + "\n" +
-                "COURSE DETAILS:" + "\n" +
-                "Course Title:" + emailInfo.getTitle() +"\n" +
-                "Price:" + emailInfo.getPrice() +"\n" +
-                "Transaction ID:" + emailInfo.getOrderId();
+                "COURSE DETAILS: " + "\n" +
+                "Course Title: " + emailInfo.getTitle() +"\n" +
+                "Price: " + emailInfo.getPrice().getMoney() +"$\n" +
+                "Transaction ID: " + emailInfo.getOrderId();
     }
 }
