@@ -5,6 +5,7 @@ package com.zelezniak.project.order;
 import com.zelezniak.project.author.CourseAuthor;
 import com.zelezniak.project.course.Course;
 import com.zelezniak.project.student.Student;
+import com.zelezniak.project.valueobjects.Money;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,8 +27,8 @@ public final class Order {
     @Column(name = "order_id")
     private String orderId;
 
-    @Column(name = "total_price")
-    private Double totalPrice;
+    @Embedded
+    private Money coursePrice;
 
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
@@ -67,7 +68,7 @@ public final class Order {
         public static Order buildOrder(Course course, CourseAuthor author) {
             Order order = Order.builder()
                     .orderId(generateOrderId())
-                    .totalPrice(course.getPrice())
+                    .coursePrice(course.getPrice())
                     .orderedCourse(course)
                     .dateCreated(LocalDateTime.now())
                     .build();
@@ -78,7 +79,7 @@ public final class Order {
         public static Order buildOrder(Course course, Student student) {
             Order order = Order.builder()
                     .orderId(generateOrderId())
-                    .totalPrice(course.getPrice())
+                    .coursePrice(course.getPrice())
                     .orderedCourse(course)
                     .dateCreated(LocalDateTime.now())
                     .build();
