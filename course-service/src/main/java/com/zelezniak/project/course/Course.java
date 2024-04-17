@@ -39,7 +39,7 @@ public final class Course {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private CourseAuthor courseAuthor;
 
     @NotBlank(message = "Category can not be blank")
@@ -50,39 +50,21 @@ public final class Course {
     @CreationTimestamp
     private LocalDateTime dateCreated;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     @JoinTable(name = "enrolled_students",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private Set<Student> enrolledStudents;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     @JoinTable(name = "enrolled_authors",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<CourseAuthor> enrolledAuthors;
 
-    @OneToMany(mappedBy = "orderedCourse", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "orderedCourse",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.DETACH})
     private Set<Order> orders;
-
-
-    public void addUserToCourse(Student student) {
-        if (student != null) {
-            if (enrolledStudents == null) {
-                enrolledStudents = new HashSet<>();
-            }
-            enrolledStudents.add(student);
-        }
-    }
-
-    public void addUserToCourse(CourseAuthor courseAuthor) {
-        if (courseAuthor != null) {
-            if (enrolledAuthors == null) {
-                enrolledAuthors = new HashSet<>();
-            }
-            enrolledAuthors.add(courseAuthor);
-        }
-    }
 
     public void addOrder(Order order) {
         if (order != null) {
@@ -115,5 +97,18 @@ public final class Course {
                 this.courseAuthor,
                 this.category,
                 this.dateCreated);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId=" + courseId +
+                ", price=" + price +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", courseAuthor=" + courseAuthor +
+                ", dateCreated=" + dateCreated +
+                ", category='" + category + '\'' +
+                '}';
     }
 }
