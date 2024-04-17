@@ -40,10 +40,11 @@ public final class Student {
     @CreationTimestamp
     private LocalDateTime dateCreated;
 
-    @ManyToMany(mappedBy = "enrolledStudents")
+    @ManyToMany(mappedBy = "enrolledStudents",
+            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     private Set<Course> boughtCourses;
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students",cascade = CascadeType.PERSIST)
     private Set<Order> studentOrders;
 
     @ManyToOne
@@ -64,6 +65,7 @@ public final class Student {
                 boughtCourses = new HashSet<>();
             }
             boughtCourses.add(course);
+            course.getEnrolledStudents().add(this);
         }
     }
 
