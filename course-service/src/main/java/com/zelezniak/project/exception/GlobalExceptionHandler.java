@@ -11,7 +11,7 @@ public final class GlobalExceptionHandler {
     private static final HttpStatus DEFAULT_ERROR_STATUS = HttpStatus.INTERNAL_SERVER_ERROR;
 
     @ExceptionHandler(CourseException.class)
-    public ResponseEntity<ErrorInfo> courseExceptionHandler(CourseException exception) {
+    public ResponseEntity<ErrorInfo> handleException(CourseException exception) {
 
         HttpStatus httpStatus = DEFAULT_ERROR_STATUS;
         switch (exception.getCourseError()) {
@@ -22,7 +22,7 @@ public final class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserException.class)
-    public ResponseEntity<ErrorInfo> userExceptionHandler(UserException exception) {
+    public ResponseEntity<ErrorInfo> handleException(UserException exception) {
         HttpStatus httpStatus = DEFAULT_ERROR_STATUS;
         switch (exception.getUserError()) {
             case USER_NOT_FOUND -> httpStatus = HttpStatus.NOT_FOUND;
@@ -36,5 +36,4 @@ public final class GlobalExceptionHandler {
     public ResponseEntity<ErrorInfo> handleException(Exception exception) {
         return ResponseEntity.status(DEFAULT_ERROR_STATUS).body(new ErrorInfo(exception.getMessage()));
     }
-
 }
