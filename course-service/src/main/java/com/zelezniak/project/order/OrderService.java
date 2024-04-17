@@ -5,6 +5,7 @@ import com.zelezniak.project.course.Course;
 import com.zelezniak.project.student.Student;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.Set;
 
 public interface OrderService {
@@ -18,4 +19,6 @@ public interface OrderService {
     Order createOrder(Course course, CourseAuthor author);
 
     Order createOrder(Course course, Student student);
+
+    Set<Order> getOrdersForUser(Principal principal);
 }
