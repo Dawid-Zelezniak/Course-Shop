@@ -41,16 +41,18 @@ public final class CourseAuthor {
     @CreationTimestamp
     private LocalDateTime dateCreated;
 
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.DETACH})
     @JoinTable(name = "created_by_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Course> createdByAuthor;
 
-    @ManyToMany(mappedBy = "enrolledAuthors")
+    @ManyToMany(mappedBy = "enrolledAuthors",
+            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     private Set<Course> boughtCourses;
 
-    @ManyToMany(mappedBy = "courseAuthors")
+    @ManyToMany(mappedBy = "courseAuthors",
+            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH})
     private Set<Order> authorOrders;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -59,11 +61,12 @@ public final class CourseAuthor {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public void addAuthorCourse(Course course) {
+    public void addNewCourse(Course course) {
         if (course != null) {
             if (createdByAuthor == null) {
                 createdByAuthor = new HashSet<>();
             }
+            course.setCourseAuthor(this);
             createdByAuthor.add(course);
         }
     }
@@ -74,6 +77,7 @@ public final class CourseAuthor {
                 boughtCourses = new HashSet<>();
             }
             boughtCourses.add(course);
+            course.getEnrolledAuthors().add(this);
         }
     }
 
@@ -84,10 +88,6 @@ public final class CourseAuthor {
             }
             authorOrders.add(order);
         }
-    }
-
-    public String getFullName() {
-        return userName.getFirstName() + " " + userName.getLastName();
     }
 
     public boolean equals(Object o) {
@@ -103,6 +103,11 @@ public final class CourseAuthor {
         }
     }
 
+    //called in thymeleaf do not touch it 
+    public String getFullName() {
+        return userName.getFirstName() + " " + userName.getLastName();
+    }
+
     public int hashCode() {
         return Objects.hash(this.authorId, this.userCredentials, this.dateCreated);
     }
@@ -111,8 +116,8 @@ public final class CourseAuthor {
 
         public static CourseAuthor buildAuthor(UserData user, BCryptPasswordEncoder passwordEncoder) {
             return CourseAuthor.builder()
-                    .userName(new UserName(user.getFirstName(),user.getLastName()))
-                    .userCredentials(new UserCredentials(user.getEmail(),passwordEncoder.encode(user.getPassword())))
+                    .userName(new UserName(user.getFirstName(), user.getLastName()))
+                    .userCredentials(new UserCredentials(user.getEmail(), passwordEncoder.encode(user.getPassword())))
                     .build();
         }
     }
