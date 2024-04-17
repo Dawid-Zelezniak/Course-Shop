@@ -24,7 +24,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.PAYMENT_I
 
 @Service
 @RequiredArgsConstructor
-public class CourseViewServiceImpl implements CourseViewService {
+public class CourseViewService implements CourseView {
 
     private final CourseService courseService;
     private final AuthorService authorService;
@@ -84,8 +84,7 @@ public class CourseViewServiceImpl implements CourseViewService {
 
     public ModelAndView courseUpdateView(Long courseId) {
         ModelAndView modelAndView = new ModelAndView(UPDATE_COURSE_VIEW);
-        Course course = courseService.findById(courseId);
-        modelAndView.addObject(COURSE_ATTRIBUTE, course);
+        modelAndView.addObject(COURSE_ATTRIBUTE,courseService.findById(courseId));
         return modelAndView;
     }
 

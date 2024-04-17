@@ -1,17 +1,15 @@
 package com.zelezniak.project.order;
 
 import com.zelezniak.project.author.AuthorService;
-import com.zelezniak.project.course.Course;
 import com.zelezniak.project.author.CourseAuthor;
+import com.zelezniak.project.course.Course;
 import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +27,6 @@ final class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    @Override
     public Order createOrder(Course course, Student student) {
         Order order = Order
                 .OrderBuilder
@@ -38,7 +35,6 @@ final class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    @Override
     public Set<Order> getOrdersForUser(Principal principal) {
         String email = principal.getName();
         CourseAuthor author = authorService.findByEmail(email);
