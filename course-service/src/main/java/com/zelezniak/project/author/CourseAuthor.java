@@ -103,7 +103,7 @@ public final class CourseAuthor {
         }
     }
 
-    //called in thymeleaf do not touch it 
+    //called in thymeleaf do not touch it
     public String getFullName() {
         return userName.getFirstName() + " " + userName.getLastName();
     }

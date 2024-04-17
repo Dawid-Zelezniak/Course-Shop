@@ -1,6 +1,9 @@
 package com.zelezniak.project.course;
 
 
+import com.zelezniak.project.dto.PaymentInfo;
+
+import java.security.Principal;
 import java.util.List;
 
 public interface CourseService {
@@ -14,5 +17,7 @@ public interface CourseService {
     List<Course> getAllAvailableCourses(String name);
 
     void addBoughtCourseAndOrderForUser(String email, String productName);
+
+    PaymentInfo prepareOrderInfo(Long courseId, Principal principal);
 
 }

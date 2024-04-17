@@ -9,5 +9,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     boolean existsByTitle(String title);
 
     Optional<Course> findByTitle(String title);
+
 }
     

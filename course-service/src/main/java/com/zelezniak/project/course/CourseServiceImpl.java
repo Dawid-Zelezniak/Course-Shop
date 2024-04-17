@@ -3,6 +3,7 @@ package com.zelezniak.project.course;
 
 import com.zelezniak.project.author.AuthorService;
 import com.zelezniak.project.author.CourseAuthor;
+import com.zelezniak.project.dto.PaymentInfo;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CourseError;
 import com.zelezniak.project.order.Order;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -36,10 +38,8 @@ class CourseServiceImpl implements CourseService {
         if (course != null) {
             checkIfCourseExists(course);
             CourseAuthor authorFromDb = authorService.findById(authorId);
-            authorFromDb.addAuthorCourse(course);
+            authorFromDb.addNewCourse(course);
             courseRepository.save(course);
-            authorService.saveAuthor(authorFromDb);
-            course.setCourseAuthor(authorFromDb);
         }
     }
 
@@ -80,6 +80,12 @@ class CourseServiceImpl implements CourseService {
         else {addCourseAndOrder(course, student);}
     }
 
+    public PaymentInfo prepareOrderInfo(Long courseId, Principal principal) {
+        Course courseToBuy = findById(courseId);
+        return PaymentInfo.PaymentInfoBuilder
+                .buildPaymentInfo(courseToBuy, principal.getName());
+    }
+
     private void addCourseAndOrder(Course course, CourseAuthor author) {
         Order order = orderService.createOrder(course, author);
         emailInfoPublisher.prepareAndSendEmailInfo(course, author,order.getOrderId());
@@ -98,16 +104,12 @@ class CourseServiceImpl implements CourseService {
 
     private void addCourseForStudent(Student student, Course course) {
         student.addBoughtCourse(course);
-        course.addUserToCourse(student);
         studentService.saveStudent(student);
-        courseRepository.save(course);
     }
 
     private void addCourseForAuthor(CourseAuthor author, Course course) {
         author.addBoughtCourse(course);
-        course.addUserToCourse(author);
         authorService.saveAuthor(author);
-        courseRepository.save(course);
     }
 
     private List<Course> coursesAvailableForStudent(List<Course> coursesFromDb, Student student) {

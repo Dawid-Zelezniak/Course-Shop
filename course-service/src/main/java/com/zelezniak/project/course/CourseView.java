@@ -5,7 +5,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 
-public interface CourseViewService {
+public interface CourseView {
 
     ModelAndView availableCoursesView(Principal principal);
 
