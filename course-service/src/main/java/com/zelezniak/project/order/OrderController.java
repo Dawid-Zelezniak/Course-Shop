@@ -19,19 +19,15 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 @Controller
 public class OrderController {
 
-    private final StudentService studentService;
-    private final AuthorService authorService;
+ private final OrderService orderService;
 
     @GetMapping({"/user/orders"})
     public ModelAndView userOrders(Principal principal) {
         ModelAndView modelAndView = new ModelAndView(USER_ORDERS_VIEW);
-        String email = principal.getName();
-        CourseAuthor author = authorService.findByEmail(email);
-        Student student = studentService.findByEmail(email);
-        Set<Order> orders = author != null ? author.getAuthorOrders() : student.getStudentOrders();
-        BigDecimal totalPrice = OrderService.totalOrdersPrice(orders);
+        Set<Order> ordersForUser = orderService.getOrdersForUser(principal);
+        BigDecimal totalPrice = OrderService.totalOrdersPrice(ordersForUser);
         modelAndView.addObject(TOTAL_PRICE_ATTRIBUTE, totalPrice);
-        modelAndView.addObject(ORDERS_ATTRIBUTE, orders);
+        modelAndView.addObject(ORDERS_ATTRIBUTE, ordersForUser);
         return modelAndView;
     }
 }
