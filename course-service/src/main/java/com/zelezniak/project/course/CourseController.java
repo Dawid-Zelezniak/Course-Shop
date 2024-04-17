@@ -19,53 +19,53 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 @RequiredArgsConstructor
 public final class CourseController {
 
-    private final CourseViewService courseViewService;
+    private final CourseView courseView;
 
     @GetMapping("/courses")
     public ModelAndView availableCourses(Principal principal) {
-        return courseViewService.availableCoursesView(principal);
+        return courseView.availableCoursesView(principal);
     }
 
     @GetMapping("/courses/payment/info")
     public ModelAndView prepareOrder(@RequestParam Long courseId, Principal principal) {
-        return courseViewService.prepareOrderInfo(courseId, principal);
+        return courseView.prepareOrderInfo(courseId, principal);
     }
 
     @GetMapping("/add/courses/form")
     public ModelAndView addCourseForm(Principal principal) {
-        return courseViewService.addCourseView(principal);
+        return courseView.addCourseView(principal);
     }
 
     @PostMapping("/save/courses")
     public ModelAndView saveCourse(@ModelAttribute(COURSE_ATTRIBUTE) @Valid Course course,
                                    BindingResult bindingResult) {
-        return courseViewService.handleCourseSaving(bindingResult, course);
+        return courseView.handleCourseSaving(bindingResult, course);
     }
 
     @GetMapping("/courses/details")
     public ModelAndView courseDetails(@RequestParam Long courseId) {
-        return courseViewService.getCourseDetailsView(courseId);
+        return courseView.getCourseDetailsView(courseId);
     }
 
     @GetMapping("/update/courses")
     public ModelAndView courseUpdateForm(@RequestParam Long courseId) {
-        return courseViewService.courseUpdateView(courseId);
+        return courseView.courseUpdateView(courseId);
     }
 
     @PostMapping("/update/courses/")
     public ModelAndView updateCourse(@RequestParam Long courseId,
                                      @ModelAttribute(COURSE_ATTRIBUTE) @Valid Course course,
                                      BindingResult bindingResult) {
-        return courseViewService.handleCourseUpdate(courseId, bindingResult, course);
+        return courseView.handleCourseUpdate(courseId, bindingResult, course);
     }
 
     @GetMapping("/purchased/courses")
     public ModelAndView coursesBoughtByUser(Principal principal) {
-        return courseViewService.coursesBoughtByUserView(principal);
+        return courseView.coursesBoughtByUserView(principal);
     }
 
     @GetMapping("/author/courses")
     public ModelAndView coursesCreatedByAuthor(Principal principal) {
-        return courseViewService.coursesCreatedByAuthorView(principal);
+        return courseView.coursesCreatedByAuthorView(principal);
     }
 }
