@@ -4,8 +4,8 @@ package com.zelezniak.project.course;
 import com.zelezniak.project.author.AuthorService;
 import com.zelezniak.project.author.CourseAuthor;
 import com.zelezniak.project.dto.PaymentInfo;
-import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.exception.CourseError;
+import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.order.OrderService;
 import com.zelezniak.project.rabbitmq.EmailPublisherService;
@@ -17,11 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -62,12 +58,11 @@ class CourseServiceImpl implements CourseService {
     }
 
     public List<Course> getAllAvailableCourses(String userEmail) {
-        List<Course> coursesFromDb = courseRepository.findAll();
         CourseAuthor courseAuthor = authorService.findByEmail(userEmail);
         Student student = studentService.findByEmail(userEmail);
         return courseAuthor != null ?
-                coursesAvailableForAuthor(coursesFromDb, courseAuthor) :
-                coursesAvailableForStudent(coursesFromDb, student);
+                coursesAvailableForAuthor(courseAuthor.getAuthorId()) :
+                coursesAvailableForStudent(student);
     }
 
     @Transactional
@@ -112,23 +107,12 @@ class CourseServiceImpl implements CourseService {
         authorService.saveAuthor(author);
     }
 
-    private List<Course> coursesAvailableForStudent(List<Course> coursesFromDb, Student student) {
-        Set<Course> boughtCourses = student.getBoughtCourses();
-        return deleteCoursesFromList(coursesFromDb, boughtCourses);
+    private List<Course> coursesAvailableForStudent(Student student) {
+        return courseRepository.findAllAvailableCoursesForStudent(student.getBoughtCourses());
     }
 
-    private List<Course> coursesAvailableForAuthor(List<Course> coursesFromDb, CourseAuthor courseAuthor) {
-        Set<Course> createdByAuthor = courseAuthor.getCreatedByAuthor();
-        Set<Course> boughtCourses = courseAuthor.getBoughtCourses();
-        Set<Course> coursesToDelete = Stream.of(createdByAuthor, boughtCourses)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
-        return deleteCoursesFromList(coursesFromDb, coursesToDelete);
-    }
-
-    private static List<Course> deleteCoursesFromList(List<Course> coursesFromDb, Set<Course> coursesToDelete) {
-        coursesFromDb.removeAll(coursesToDelete);
-        return coursesFromDb;
+    private List<Course> coursesAvailableForAuthor(Long authorId) {
+     return courseRepository.findAllAvailableCoursesForAuthor(authorId);
     }
 
     private void setCourse(Course courseFromDb, Course course) {
