@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Embeddable
 @Getter
-public class UserCredentials {
+public final class UserCredentials {
 
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private final String email;

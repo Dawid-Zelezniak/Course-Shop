@@ -3,14 +3,17 @@ package com.zelezniak.project.valueobjects;
 import com.zelezniak.project.exception.CourseError;
 import com.zelezniak.project.exception.CourseException;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Embeddable
 @Getter
-public class Money {
+public final class Money {
     private final BigDecimal money;
 
     public Money(String money) {
@@ -22,7 +25,7 @@ public class Money {
     }
 
     private BigDecimal format(double money) {
-        String formatted = String.format("%.2f",money);
+        String formatted = String.format("%.2f", money);
         return new BigDecimal(formatted);
     }
 

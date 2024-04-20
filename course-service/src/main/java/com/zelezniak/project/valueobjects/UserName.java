@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Embeddable
 @Getter
-public class UserName {
+public final class UserName {
 
     private final String firstName;
     private final String lastName;
