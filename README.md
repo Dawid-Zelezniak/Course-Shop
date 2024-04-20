@@ -8,12 +8,12 @@ Aplikacja będzie na bieżąco aktualizowana oferując nowe funkcjonalności dla
 [ENG] The application is a course management system, where users such as authors or students can register.Authors can create new courses,modify existing ones, and also browse courses from other authors and purchase them.Students can only browse available courses or purchase them.The 
 application also includes an administrator,who has permissions similar to authors,but additionally has access to user information (created courses,purchased courses,placed orders).After a successful transaction,the user receives an email notification about the purchased course,which is sent from the main service via RabbitMQ to the email service.Payments are processed through the API provided by Stripe,enhancing user security. 
 The application will be continuously updated, offering new features for users as well as more efficient and readable code.
+
 Technologies I used : 
 * Spring Boot v3.2.3 
 * Java 17 
 * RabbitMQ 
 * Stripe 
 * MYSQL 
-* Thymeleaf
   
 VIDEO PRESENTATION ~ 10 min [PL] : https://youtu.be/923i1-52OQs
