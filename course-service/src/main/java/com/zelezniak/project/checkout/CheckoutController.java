@@ -1,9 +1,7 @@
 package com.zelezniak.project.checkout;
 
-import com.zelezniak.project.course.CourseService;
 import com.zelezniak.project.dto.PaymentInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +18,17 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 @RequiredArgsConstructor
 public final class CheckoutController {
 
-    private final CourseService courseService;
-
-    @Value("${stripe.api.publicKey}")
-    private String publicKey;
+    private final Checkout checkout;
 
     @PostMapping("/checkout")
     public String showCard(@ModelAttribute PaymentInfo paymentInfo, Model model) {
-        model.addAttribute(PUBLIC_KEY_ATTRIBUTE, publicKey);
-        model.addAttribute(AMOUNT_ATTRIBUTE, paymentInfo.getAmount());
-        model.addAttribute(EMAIL_ATTRIBUTE, paymentInfo.getEmail());
-        model.addAttribute(PRODUCT_NAME_ATTRIBUTE, paymentInfo.getProductName());
+        checkout.addPaymentAttributesToModel(model, paymentInfo);
         return CHECKOUT_VIEW;
     }
 
     @GetMapping("/success/payment")
-    public String handleSuccessPayment(Principal principal, @RequestParam String productName) {
-        String email = principal.getName();
-        courseService.addBoughtCourseAndOrderForUser(email, productName);
+    public String handleSuccessPayment(Principal principal, @RequestParam String courseName) {
+        checkout.addBoughtCourseAndOrderForUser(principal.getName(), courseName);
         return PAYMENT_SUCCESS_VIEW;
     }
 }
