@@ -7,18 +7,20 @@ import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-final class OrderServiceImpl implements OrderService {
+class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final StudentService studentService;
     private final AuthorService authorService;
 
+    @Transactional
     public Order createOrder(Course course, CourseAuthor author) {
         Order order = Order
                 .OrderBuilder
@@ -27,6 +29,7 @@ final class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    @Transactional
     public Order createOrder(Course course, Student student) {
         Order order = Order
                 .OrderBuilder
@@ -35,6 +38,7 @@ final class OrderServiceImpl implements OrderService {
         return order;
     }
 
+    @Transactional(readOnly = true)
     public Set<Order> getOrdersForUser(Principal principal) {
         String email = principal.getName();
         CourseAuthor author = authorService.findByEmail(email);

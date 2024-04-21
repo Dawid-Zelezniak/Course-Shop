@@ -16,7 +16,6 @@ public class OrderViewService implements OrderView {
 
     private final OrderService orderService;
 
-    @Override
     public ModelAndView getUserOrders(Principal principal) {
         ModelAndView modelAndView = new ModelAndView(USER_ORDERS_VIEW);
         Set<Order> ordersForUser = orderService.getOrdersForUser(principal);
