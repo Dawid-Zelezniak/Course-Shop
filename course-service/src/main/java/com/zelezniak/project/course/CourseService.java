@@ -16,7 +16,7 @@ public interface CourseService {
 
     List<Course> getAllAvailableCourses(String name);
 
-    void addBoughtCourseAndOrderForUser(String email, String productName);
+    void addBoughtCourseAndOrderForUser(String email, String courseName);
 
     PaymentInfo prepareOrderInfo(Long courseId, Principal principal);
 

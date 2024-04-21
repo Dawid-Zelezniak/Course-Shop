@@ -8,7 +8,7 @@ import com.zelezniak.project.exception.CourseError;
 import com.zelezniak.project.exception.CourseException;
 import com.zelezniak.project.order.Order;
 import com.zelezniak.project.order.OrderService;
-import com.zelezniak.project.rabbitmq.EmailPublisherService;
+import com.zelezniak.project.rabbitmq.EmailPublisher;
 import com.zelezniak.project.student.Student;
 import com.zelezniak.project.student.StudentService;
 import com.zelezniak.project.valueobjects.Money;
@@ -27,7 +27,7 @@ class CourseServiceImpl implements CourseService {
     private final AuthorService authorService;
     private final StudentService studentService;
     private final OrderService orderService;
-    private final EmailPublisherService emailInfoPublisher;
+    private final EmailPublisher emailInfoPublisher;
 
     @Transactional
     public void addCourse(Course course, Long authorId) {
@@ -39,6 +39,7 @@ class CourseServiceImpl implements CourseService {
         }
     }
 
+    @Transactional(readOnly = true)
     public Course findById(Long courseId) {
         return courseRepository.findById(courseId)
                 .orElseThrow(() ->new CourseException(CourseError.COURSE_NOT_FOUND));
@@ -57,6 +58,7 @@ class CourseServiceImpl implements CourseService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Course> getAllAvailableCourses(String userEmail) {
         CourseAuthor courseAuthor = authorService.findByEmail(userEmail);
         Student student = studentService.findByEmail(userEmail);
@@ -66,15 +68,16 @@ class CourseServiceImpl implements CourseService {
     }
 
     @Transactional
-    public void addBoughtCourseAndOrderForUser(String email, String productName) {
+    public void addBoughtCourseAndOrderForUser(String email, String courseName) {
         CourseAuthor author = authorService.findByEmail(email);
         Student student = studentService.findByEmail(email);
-        Course course = courseRepository.findByTitle(productName)
+        Course course = courseRepository.findByTitle(courseName)
                 .orElseThrow(() -> new CourseException(CourseError.COURSE_NOT_FOUND));
         if (author != null) {addCourseAndOrder(course, author);}
         else {addCourseAndOrder(course, student);}
     }
 
+    @Transactional
     public PaymentInfo prepareOrderInfo(Long courseId, Principal principal) {
         Course courseToBuy = findById(courseId);
         return PaymentInfo.PaymentInfoBuilder
