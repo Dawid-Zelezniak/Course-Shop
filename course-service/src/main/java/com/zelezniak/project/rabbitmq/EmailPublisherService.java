@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-final class EmailInfoPublisherImpl implements EmailPublisherService {
+final class EmailPublisherService implements EmailPublisher {
 
     private final RabbitTemplate rabbitTemplate;
 
