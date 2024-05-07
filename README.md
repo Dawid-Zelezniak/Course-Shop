@@ -13,5 +13,4 @@ Technologies I used :
 * RabbitMQ 
 * Stripe 
 * MYSQL 
-  
-VIDEO PRESENTATION ~ 10 min [PL] : https://youtu.be/923i1-52OQs
+
