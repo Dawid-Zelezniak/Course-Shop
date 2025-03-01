@@ -17,6 +17,7 @@ public final class GlobalExceptionHandler {
         switch (exception.getCourseError()) {
             case COURSE_NOT_FOUND -> httpStatus = HttpStatus.NOT_FOUND;
             case COURSE_ALREADY_EXISTS -> httpStatus = HttpStatus.CONFLICT;
+            case COURSE_PRICE_EXCEPTION -> httpStatus = HttpStatus.BAD_REQUEST;
         }
         return ResponseEntity.status(httpStatus).body(new ErrorInfo(exception.getCourseError().getMessage()));
     }
@@ -28,6 +29,10 @@ public final class GlobalExceptionHandler {
             case USER_NOT_FOUND -> httpStatus = HttpStatus.NOT_FOUND;
             case EMAIL_IN_WRONG_FORMAT,
                  USER_ALREADY_EXISTS -> httpStatus = HttpStatus.CONFLICT;
+            case FIRST_NAME_TOO_SHORT,
+                 LAST_NAME_TOO_SHORT,
+                 PASSWORD_TOO_SHORT -> httpStatus = HttpStatus.BAD_REQUEST;
+
         }
         return ResponseEntity.status(httpStatus).body(new ErrorInfo(exception.getUserError().getMessage()));
     }
