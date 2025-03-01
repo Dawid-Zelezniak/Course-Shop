@@ -70,9 +70,7 @@ async function handleSubmit(e) {
     const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-            // Przekierowanie na stronę po udanej płatności
-            // return_url: "https://dashboard.stripe.com/test/payments/"+paymentIntentID,
-             return_url: "http://localhost:8080/success/payment?productName=" + encodeURIComponent(productName),
+             return_url: "http://localhost:8080/success/payment?courseName=" + encodeURIComponent(productName),
             receipt_email: emailAddress
         },
     });

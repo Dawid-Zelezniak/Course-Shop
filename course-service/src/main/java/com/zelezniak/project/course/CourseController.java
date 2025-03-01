@@ -17,7 +17,7 @@ import static com.zelezniak.project.common.AttributesAndTemplatesNames.*;
 
 @Controller
 @RequiredArgsConstructor
-public final class CourseController {
+public final class  CourseController {
 
     private final CourseView courseView;
 
