@@ -2,31 +2,29 @@ package com.zelezniak.project.valueobjects;
 
 import com.zelezniak.project.exception.CourseError;
 import com.zelezniak.project.exception.CourseException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 @Embeddable
 @Getter
+@Slf4j
 public final class Money {
-    private final BigDecimal money;
+
+    @Column(nullable = false)
+    private BigDecimal money;
 
     public Money(String money) {
-        double value = Double.parseDouble(money);
-        if (value < 0) {
+        BigDecimal value = BigDecimal.valueOf(Double.parseDouble(money));
+        if (value.compareTo(BigDecimal.ZERO) < 0) {
             throw new CourseException(CourseError.COURSE_PRICE_EXCEPTION);
         }
-        this.money = format(value);
-    }
-
-    private BigDecimal format(double money) {
-        String formatted = String.format("%.2f", money);
-        return new BigDecimal(formatted);
+        this.money = value.setScale(2, RoundingMode.HALF_UP);
     }
 
     public Money() {
@@ -54,4 +52,5 @@ public final class Money {
     public String toString() {
         return money.toString();
     }
+
 }
